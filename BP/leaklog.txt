@@ -1,0 +1,59 @@
+==9648== Memcheck, a memory error detector
+==9648== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==9648== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==9648== Command: ./main
+==9648== Parent PID: 9917
+==9648== 
+==9648== Invalid read of size 8
+==9648==    at 0x10C217: Matrix_print (Matrix.c:263)
+==9648==    by 0x10ACDF: main (test.c:271)
+==9648==  Address 0x897a1d0 is 0 bytes inside a block of size 72 free'd
+==9648==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9648==    by 0x10B99F: Matrix_free (Matrix.c:74)
+==9648==    by 0x10AB26: main (test.c:258)
+==9648==  Block was alloc'd at
+==9648==    at 0x4C2CE5F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9648==    by 0x10B9DD: Matrix_create (Matrix.c:91)
+==9648==    by 0x10C69F: Matrix_add (Matrix.c:393)
+==9648==    by 0x10AA80: main (test.c:254)
+==9648== 
+==9648== Invalid free() / delete / delete[] / realloc()
+==9648==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9648==    by 0x10B22D: BP_free (BP.c:58)
+==9648==    by 0x10AE22: main (test.c:297)
+==9648==  Address 0x897a410 is 0 bytes inside a block of size 56 free'd
+==9648==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9648==    by 0x10B215: BP_free (BP.c:56)
+==9648==    by 0x10AE22: main (test.c:297)
+==9648==  Block was alloc'd at
+==9648==    at 0x4C2CE5F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9648==    by 0x10AEB8: BP_create (BP.c:24)
+==9648==    by 0x10ADD4: main (test.c:294)
+==9648== 
+==9648== 
+==9648== HEAP SUMMARY:
+==9648==     in use at exit: 40,008 bytes in 1,001 blocks
+==9648==   total heap usage: 1,068 allocs, 68 frees, 1,354,592 bytes allocated
+==9648== 
+==9648== 8 bytes in 1 blocks are still reachable in loss record 1 of 2
+==9648==    at 0x4C2CE5F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9648==    by 0x80CA2F9: gomp_malloc (alloc.c:37)
+==9648==    by 0x80D9A47: gomp_init_num_threads (proc.c:91)
+==9648==    by 0x80C8909: initialize_env (env.c:1214)
+==9648==    by 0x400F579: call_init.part.0 (in /usr/lib/ld-2.26.so)
+==9648==    by 0x400F685: _dl_init (in /usr/lib/ld-2.26.so)
+==9648==    by 0x4000F69: ??? (in /usr/lib/ld-2.26.so)
+==9648== 
+==9648== 40,000 bytes in 1,000 blocks are definitely lost in loss record 2 of 2
+==9648==    at 0x4C2CE5F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9648==    by 0x109117: main (test.c:63)
+==9648== 
+==9648== LEAK SUMMARY:
+==9648==    definitely lost: 40,000 bytes in 1,000 blocks
+==9648==    indirectly lost: 0 bytes in 0 blocks
+==9648==      possibly lost: 0 bytes in 0 blocks
+==9648==    still reachable: 8 bytes in 1 blocks
+==9648==         suppressed: 0 bytes in 0 blocks
+==9648== 
+==9648== For counts of detected and suppressed errors, rerun with: -v
+==9648== ERROR SUMMARY: 11 errors from 3 contexts (suppressed: 0 from 0)
