@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGs = -g -c -std=c99
-LFLAGs = -lm -lopenblas 
+LFLAGs = -lm -lopenblas -ltcmalloc
 BUILD_DIR = ./build
 _OBJs = test.o BP.o numeric.o Matrix.o
 
