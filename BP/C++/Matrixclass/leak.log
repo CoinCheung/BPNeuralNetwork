@@ -1,0 +1,861 @@
+==13519== Memcheck, a memory error detector
+==13519== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13519== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==13519== Command: ./main
+==13519== Parent PID: 11609
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x4E4F6EC: ??? (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x400F579: call_init.part.0 (in /usr/lib/ld-2.26.so)
+==13519==    by 0x400F685: _dl_init (in /usr/lib/ld-2.26.so)
+==13519==    by 0x4000F69: ??? (in /usr/lib/ld-2.26.so)
+==13519==  Address 0x75063e0 is 0 bytes inside a block of size 4 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x4E4F6DF: ??? (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x400F579: call_init.part.0 (in /usr/lib/ld-2.26.so)
+==13519==    by 0x400F685: _dl_init (in /usr/lib/ld-2.26.so)
+==13519==    by 0x4000F69: ??? (in /usr/lib/ld-2.26.so)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x6348EEF: deallocate (new_allocator.h:125)
+==13519==    by 0x6348EEF: deallocate (alloc_traits.h:462)
+==13519==    by 0x6348EEF: _M_destroy (basic_string.h:210)
+==13519==    by 0x6348EEF: _M_dispose (basic_string.h:205)
+==13519==    by 0x6348EEF: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (basic_string.tcc:327)
+==13519==    by 0x634A45B: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (basic_string.tcc:370)
+==13519==    by 0x4E65A4D: MallocExtension::Initialize() (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x4E4F6F1: ??? (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x400F579: call_init.part.0 (in /usr/lib/ld-2.26.so)
+==13519==    by 0x400F685: _dl_init (in /usr/lib/ld-2.26.so)
+==13519==    by 0x4000F69: ??? (in /usr/lib/ld-2.26.so)
+==13519==  Address 0x7506960 is 0 bytes inside a block of size 23 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x4E659E2: MallocExtension::Initialize() (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x4E4F6F1: ??? (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x400F579: call_init.part.0 (in /usr/lib/ld-2.26.so)
+==13519==    by 0x400F685: _dl_init (in /usr/lib/ld-2.26.so)
+==13519==    by 0x4000F69: ??? (in /usr/lib/ld-2.26.so)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x4E65A5F: MallocExtension::Initialize() (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x4E4F6F1: ??? (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x400F579: call_init.part.0 (in /usr/lib/ld-2.26.so)
+==13519==    by 0x400F685: _dl_init (in /usr/lib/ld-2.26.so)
+==13519==    by 0x4000F69: ??? (in /usr/lib/ld-2.26.so)
+==13519==  Address 0x75069c0 is 0 bytes inside a block of size 45 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x6348E6A: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (basic_string.tcc:317)
+==13519==    by 0x634A45B: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (basic_string.tcc:370)
+==13519==    by 0x4E65A4D: MallocExtension::Initialize() (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x4E4F6F1: ??? (in /usr/lib/libtcmalloc.so.4.3.0)
+==13519==    by 0x400F579: call_init.part.0 (in /usr/lib/ld-2.26.so)
+==13519==    by 0x400F685: _dl_init (in /usr/lib/ld-2.26.so)
+==13519==    by 0x4000F69: ??? (in /usr/lib/ld-2.26.so)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109686: tryMatrix2() (test.cpp:77)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7506f20 is 0 bytes inside a block of size 160 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x1095AF: tryMatrix2() (test.cpp:73)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109695: tryMatrix2() (test.cpp:77)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507000 is 0 bytes inside a block of size 32 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10961E: tryMatrix2() (test.cpp:75)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x1097F8: tryMatrix2() (test.cpp:85)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507060 is 0 bytes inside a block of size 160 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x1096AB: tryMatrix2() (test.cpp:79)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109807: tryMatrix2() (test.cpp:85)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507140 is 0 bytes inside a block of size 32 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10971A: tryMatrix2() (test.cpp:81)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109816: tryMatrix2() (test.cpp:85)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75071a0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x109790: tryMatrix2() (test.cpp:83)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109979: tryMatrix2() (test.cpp:93)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507210 is 0 bytes inside a block of size 32 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10982C: tryMatrix2() (test.cpp:87)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109988: tryMatrix2() (test.cpp:93)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507270 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10989B: tryMatrix2() (test.cpp:89)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109997: tryMatrix2() (test.cpp:93)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75072e0 is 0 bytes inside a block of size 160 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x109911: tryMatrix2() (test.cpp:91)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109AFA: tryMatrix2() (test.cpp:101)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75073c0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x1099AD: tryMatrix2() (test.cpp:95)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109B09: tryMatrix2() (test.cpp:101)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507430 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109A1C: tryMatrix2() (test.cpp:97)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109B18: tryMatrix2() (test.cpp:101)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75074a0 is 0 bytes inside a block of size 8 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x109A92: tryMatrix2() (test.cpp:99)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109C7B: tryMatrix2() (test.cpp:109)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75074f0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109B2E: tryMatrix2() (test.cpp:103)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109C8A: tryMatrix2() (test.cpp:109)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507560 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109B9D: tryMatrix2() (test.cpp:105)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109C99: tryMatrix2() (test.cpp:109)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507670 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x109C13: tryMatrix2() (test.cpp:107)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109DFC: tryMatrix2() (test.cpp:117)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75076e0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109CAF: tryMatrix2() (test.cpp:111)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109E0B: tryMatrix2() (test.cpp:117)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75077f0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109D1E: tryMatrix2() (test.cpp:113)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109E1A: tryMatrix2() (test.cpp:117)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507860 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x109D94: tryMatrix2() (test.cpp:115)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109F7D: tryMatrix2() (test.cpp:125)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75078d0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109E30: tryMatrix2() (test.cpp:119)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109F8C: tryMatrix2() (test.cpp:125)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75079e0 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109E9F: tryMatrix2() (test.cpp:121)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x109F9B: tryMatrix2() (test.cpp:125)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507b10 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x109F15: tryMatrix2() (test.cpp:123)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10A0A8: tryMatrix2() (test.cpp:131)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507d20 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C07B: Matrix2<double>::dot(Matrix2<double> const&) (Matrix.h:325)
+==13519==    by 0x10A099: tryMatrix2() (test.cpp:131)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A0EE: tryMatrix2() (test.cpp:133)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507c40 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x109FB1: tryMatrix2() (test.cpp:127)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A0FD: tryMatrix2() (test.cpp:133)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507cb0 is 0 bytes inside a block of size 48 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A020: tryMatrix2() (test.cpp:129)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10A213: tryMatrix2() (test.cpp:139)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507f80 is 0 bytes inside a block of size 24 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C07B: Matrix2<double>::dot(Matrix2<double> const&) (Matrix.h:325)
+==13519==    by 0x10A207: tryMatrix2() (test.cpp:139)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A259: tryMatrix2() (test.cpp:141)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507e50 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A122: tryMatrix2() (test.cpp:135)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A268: tryMatrix2() (test.cpp:141)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507ec0 is 0 bytes inside a block of size 120 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A191: tryMatrix2() (test.cpp:137)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10A37E: tryMatrix2() (test.cpp:147)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508160 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C07B: Matrix2<double>::dot(Matrix2<double> const&) (Matrix.h:325)
+==13519==    by 0x10A372: tryMatrix2() (test.cpp:147)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A3C4: tryMatrix2() (test.cpp:149)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7507fe0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A28D: tryMatrix2() (test.cpp:143)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A3D3: tryMatrix2() (test.cpp:149)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75080f0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A2FC: tryMatrix2() (test.cpp:145)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10A4E9: tryMatrix2() (test.cpp:155)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508410 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C07B: Matrix2<double>::dot(Matrix2<double> const&) (Matrix.h:325)
+==13519==    by 0x10A4DD: tryMatrix2() (test.cpp:155)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A52F: tryMatrix2() (test.cpp:157)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75081d0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A3F8: tryMatrix2() (test.cpp:151)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A53E: tryMatrix2() (test.cpp:157)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75082e0 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A467: tryMatrix2() (test.cpp:153)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10A69F: tryMatrix2() (test.cpp:163)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508780 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10A657: tryMatrix2() (test.cpp:163)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BA74: Matrix2<double>::operator=(Matrix2<double>&&) (Matrix.h:193)
+==13519==    by 0x10A6E1: tryMatrix2() (test.cpp:165)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508540 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A563: tryMatrix2() (test.cpp:159)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A733: tryMatrix2() (test.cpp:168)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75089c0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10A6CB: tryMatrix2() (test.cpp:165)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A742: tryMatrix2() (test.cpp:168)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508650 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A5D2: tryMatrix2() (test.cpp:161)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A751: tryMatrix2() (test.cpp:168)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508890 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C07B: Matrix2<double>::dot(Matrix2<double> const&) (Matrix.h:325)
+==13519==    by 0x10A671: tryMatrix2() (test.cpp:163)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A8B4: tryMatrix2() (test.cpp:176)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508ad0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A767: tryMatrix2() (test.cpp:170)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A8C3: tryMatrix2() (test.cpp:176)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508be0 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A7D6: tryMatrix2() (test.cpp:172)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10A8D2: tryMatrix2() (test.cpp:176)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508d10 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x10A84C: tryMatrix2() (test.cpp:174)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10A9AE: tryMatrix2() (test.cpp:180)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508f50 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A957: tryMatrix2() (test.cpp:180)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10AA59: tryMatrix2() (test.cpp:182)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75091b0 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10B9A5: Matrix2<double>::zeros(int, int) (Matrix.h:248)
+==13519==    by 0x10BDC2: Matrix2<double>::dot(Matrix2<double> const&, Matrix2<double> const&) (Matrix.h:375)
+==13519==    by 0x10AA02: tryMatrix2() (test.cpp:182)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AA9F: tryMatrix2() (test.cpp:184)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7508e40 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10A8E8: tryMatrix2() (test.cpp:178)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AAAE: tryMatrix2() (test.cpp:184)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509080 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10A980: tryMatrix2() (test.cpp:180)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AABD: tryMatrix2() (test.cpp:184)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75092e0 is 0 bytes inside a block of size 240 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10AA2B: tryMatrix2() (test.cpp:182)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10AB99: tryMatrix2() (test.cpp:188)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509520 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10AB42: tryMatrix2() (test.cpp:188)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AC55: tryMatrix2() (test.cpp:192)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509410 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10AAD3: tryMatrix2() (test.cpp:186)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AC64: tryMatrix2() (test.cpp:192)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509630 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10AB6B: tryMatrix2() (test.cpp:188)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AC73: tryMatrix2() (test.cpp:192)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509740 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C46A: Matrix2<double>::operator*(Matrix2<double> const&) (Matrix.h:419)
+==13519==    by 0x10ABED: tryMatrix2() (test.cpp:190)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10AD4F: tryMatrix2() (test.cpp:196)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75098c0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10ACF8: tryMatrix2() (test.cpp:196)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AE0B: tryMatrix2() (test.cpp:200)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509850 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10AC89: tryMatrix2() (test.cpp:194)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AE1A: tryMatrix2() (test.cpp:200)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x75099d0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10AD21: tryMatrix2() (test.cpp:196)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AE29: tryMatrix2() (test.cpp:200)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509ae0 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C767: Matrix2<double>::operator*(Matrix2<double> const&) (Matrix.h:456)
+==13519==    by 0x10ADA3: tryMatrix2() (test.cpp:198)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10AF05: tryMatrix2() (test.cpp:204)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509c60 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10AEAE: tryMatrix2() (test.cpp:204)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AFC1: tryMatrix2() (test.cpp:208)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509bf0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10AE3F: tryMatrix2() (test.cpp:202)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AFD0: tryMatrix2() (test.cpp:208)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509d70 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10AED7: tryMatrix2() (test.cpp:204)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10AFDF: tryMatrix2() (test.cpp:208)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509e80 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C882: Matrix2<double>::operator*(Matrix2<double> const&) (Matrix.h:470)
+==13519==    by 0x10AF59: tryMatrix2() (test.cpp:206)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10B0BB: tryMatrix2() (test.cpp:212)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x750a0a0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10B064: tryMatrix2() (test.cpp:212)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10B177: tryMatrix2() (test.cpp:216)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x7509f90 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10AFF5: tryMatrix2() (test.cpp:210)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10B186: tryMatrix2() (test.cpp:216)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x750a110 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10B08D: tryMatrix2() (test.cpp:212)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10B195: tryMatrix2() (test.cpp:216)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x750a180 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C545: Matrix2<double>::operator*(Matrix2<double> const&) (Matrix.h:428)
+==13519==    by 0x10B10F: tryMatrix2() (test.cpp:214)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10B95E: Matrix2<double>::~Matrix2() (Matrix.h:157)
+==13519==    by 0x10B271: tryMatrix2() (test.cpp:220)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x750a3a0 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10B21A: tryMatrix2() (test.cpp:220)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10B32D: tryMatrix2() (test.cpp:224)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x750a290 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10BC45: Matrix2<double>::ones(int, int) (Matrix.h:213)
+==13519==    by 0x10B1AB: tryMatrix2() (test.cpp:218)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10B33C: tryMatrix2() (test.cpp:224)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x750a410 is 0 bytes inside a block of size 40 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C341: Matrix2<double>::operator*(double) (Matrix.h:498)
+==13519==    by 0x10B243: tryMatrix2() (test.cpp:220)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== Mismatched free() / delete / delete []
+==13519==    at 0x4C2E14B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10BC00: Matrix2<double>::free() (Matrix.h:306)
+==13519==    by 0x10B34B: tryMatrix2() (test.cpp:224)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519==  Address 0x750a480 is 0 bytes inside a block of size 200 alloc'd
+==13519==    at 0x4C2DC9F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13519==    by 0x10CAAC: Matrix2<double>::Matrix2(int, int) (Matrix.h:130)
+==13519==    by 0x10C65B: Matrix2<double>::operator*(Matrix2<double> const&) (Matrix.h:442)
+==13519==    by 0x10B2C5: tryMatrix2() (test.cpp:222)
+==13519==    by 0x1093D0: main (test.cpp:36)
+==13519== 
+==13519== 
+==13519== HEAP SUMMARY:
+==13519==     in use at exit: 40 bytes in 2 blocks
+==13519==   total heap usage: 103 allocs, 101 frees, 162,106 bytes allocated
+==13519== 
+==13519== LEAK SUMMARY:
+==13519==    definitely lost: 0 bytes in 0 blocks
+==13519==    indirectly lost: 0 bytes in 0 blocks
+==13519==      possibly lost: 0 bytes in 0 blocks
+==13519==    still reachable: 40 bytes in 2 blocks
+==13519==         suppressed: 0 bytes in 0 blocks
+==13519== Reachable blocks (those to which a pointer was found) are not shown.
+==13519== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==13519== 
+==13519== For counts of detected and suppressed errors, rerun with: -v
+==13519== ERROR SUMMARY: 68 errors from 68 contexts (suppressed: 0 from 0)
