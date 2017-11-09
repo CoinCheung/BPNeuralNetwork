@@ -5,8 +5,14 @@
  * only basic data types supported: double
  * operators are overloaded so that it looks like numpy. However some difference are such as: 
  * 1. when the elements are to be accessed with indices, the normal bracelet () are used instead of regular bracelet []. 
- * 2. slice should be used like this
+ *
+ * 2. slice should be used like this: m(Ind::slice(st, ed, step)), where ed is included in the counting of the elements, while in numpy, the dim assigned by ed is not included
+ *
+ * 3. when using slice, only the step can be omitted and the other inputs must be assined. To pick out the whole lines, use m(Ind::slice(0, -1))
+ *
  *  */
+
+
 
 /* ********************************************************* 
  * header files
@@ -32,7 +38,6 @@ using std::memset;
 
 
 
-
 /* ********************************************************* 
  * macros and types
  ********************************************************* */
@@ -47,6 +52,8 @@ using std::memset;
 
 /* class:
  * instruction: 
+ * derived from: 
+ * successors: 
  *  */
 class Ind
 {
@@ -71,7 +78,7 @@ class Ind
 
 
         void init(const int num);
-        static Ind&& slice(int start = 0, int end = 0, int step = 1);
+        static Ind slice(int start = 0, int end = 0, int step = 1);
 };
 
 
@@ -79,6 +86,8 @@ class Ind
 
 /* class:
  * instruction: 
+ * derived from: 
+ * successors: 
  *  */
 template <class T>
 class Matrix2
@@ -128,6 +137,7 @@ class Matrix2
         T& operator()(const int i);
         Matrix2 operator()(Ind& ind); // slice as in python
         Matrix2 operator()(Ind&& ind); // slice as in python
+        Matrix2 operator()(Ind&& indx, Ind&& indy); // slice as in python
 
         template<class C>
         friend Matrix2<C> operator*(const C n, const Matrix2<C>& m);
@@ -156,205 +166,16 @@ class Matrix2
         T max();
         Ind argmax(const int axis);
         Ind argmax();
+        Matrix2 min(const int axis);
+        T min();
+        Ind argmin(const int axis);
+        Ind argmin();
 };
 
 
 /* ********************************************************* 
  * implementations
  ********************************************************* */
-
-/////////////////////////////////////////////////////////
-/* Implementation of class Ind member functions */
-/////////////////////////////////////////////////////////
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-Ind::Ind():ele_num(0), datax(NULL), datay(NULL),slice_start(0), slice_end(0), slice_step(0)
-{
-}
-
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-Ind::Ind(const int num):ele_num(num), datax(new int[num]), datay(new int[num]), slice_start(0), slice_end(0), slice_step(0)
-{
-}
-
-
-
-/* function:
- * instruction: copying construct
- * input:
- * return:
- *  */
-Ind::Ind(Ind& ind)
-{
-    cout << "Ind: copying construct" << endl;
-
-    ele_num = ind.ele_num;
-    slice_start = ind.slice_start;
-    slice_end = ind.slice_end;
-    slice_step = ind.slice_step;
-
-    datax = ind.datax;
-    datay = ind.datay;
-    
-}
-
-
-
-/* function:
- * instruction: moving construct
- * input:
- * return:
- *  */
-Ind::Ind(Ind&& ind)
-{
-    cout << "Ind: moving construct" << endl;
-
-    ele_num = ind.ele_num;
-    slice_start = ind.slice_start;
-    slice_end = ind.slice_end;
-    slice_step = ind.slice_step;
-
-    datax = ind.datax;
-    datay = ind.datay;
-    
-    // ind.slice_start = 0;
-    // ind.slice_end = 0;
-    // ind.slice_step = 0;
-    // ind.ele_num = 0;
-    ind.datax = NULL;
-    ind.datay = NULL;
-}
-
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-Ind& Ind::operator=(Ind&& ind)
-{
-    cout << "Ind: moving assignment" << endl;
-
-    this->ele_num = ind.ele_num;
-    this->slice_start = ind.slice_start;
-    this->slice_end = ind.slice_end;
-    this->slice_step = ind.slice_step;
-    this->datax = ind.datax;
-    this->datay = ind.datay;
-
-    ind.slice_start = 0;
-    ind.slice_end = 0;
-    ind.slice_end = 0;
-    ind.ele_num = 0;
-    ind.datax = NULL;
-    ind.datay = NULL;
-
-    return *this;
-}
-
-
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-Ind::~Ind()
-{
-    delete[] datax;
-    delete[] datay;
-
-    slice_start = 0;
-    slice_end = 0;
-    slice_end = 0;
-    ele_num = 0;
-    datax = NULL;
-    datay = NULL;
-}
-
-
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-void Ind::print()
-{
-
-    if(ele_num != 0)
-        for(long i = 0; i < ele_num; i++)
-            cout << "(" << datax[i] << ", " << datay[i] << ")" << endl;
-
-}
-
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-void Ind::free()
-{
-    delete[] datax;
-    delete[] datay;
-    slice_start = 0;
-    slice_end = 0;
-    slice_end = 0;
-    ele_num = 0;
-    datax = NULL;
-    datay = NULL;
-}
-
-
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-void Ind::init(const int num)
-{
-    ele_num = num;
-    delete [] datax;
-    delete [] datay;
-    datax = new int[ele_num];
-    datay = new int[ele_num];
-}
-
-
-
-
-/* function:
- * instruction: get the slice index with one number, works like a[ar:] in numpy
- * input:
- * return:
- *  */
-Ind&& Ind::slice(int start, int end, int step)
-{
-    Ind res;
-
-    res.slice_start = start; 
-    res.slice_end = end;
-    res.slice_step = step;
-
-    return std::move(res);
-}
 
 
 /////////////////////////////////////////////////////////
@@ -1367,37 +1188,45 @@ Matrix2<T> Matrix2<T>::operator()(Ind& ind)
 }
 
 
+
 /* function:
- * instruction: 
+ * instruction:  if slice() parameter ed is N, 
  * input:
  * return:
  *  */
 template<class T>
-Matrix2<T> Matrix2<T>::operator()(Ind&& in)
+Matrix2<T> Matrix2<T>::operator()(Ind&& ind)
 {
-    Ind ind = in;
+    // Ind ind = std::move(in);
     Matrix2<T> res;
     int st, ed;
-    int pos;
-    int n;
 
+
+    st = ind.slice_start;
     if(ind.slice_start < 0)
-        st = N + ind.slice_start;
-    else
-        st = ind.slice_start;
-    if(ind.slice_end <= 0)
-        ed = N + ind.slice_end;
-    else
-        ed = ind.slice_end;
-    if(st < 0 || ed > N)
+        st += N;
+    ed = ind.slice_end;
+    if(ind.slice_end < 0)
+        ed += N;
+
+    if(st < 0 || st >= N || ed < 0 || ed >= N)
     {
         cout << __FILE__ << ": " << __LINE__ << ": slice indices out of range" << endl;
         exit(0);
     }
 
-    n = (ed - st) / ind.slice_step;
-    pos = st*D;
+    if((ed - st) * ind.slice_step < 0)
+    {
+        cout << __FILE__ << ": " << __LINE__ << ": slice start and end indices do not agree with step" << endl;
+        exit(0);
+    }
+
+    // pick the numbers out
+    long pos;
+    int n;
+    n = (ed - st) / ind.slice_step + 1;
     res.init(n,D);
+    pos = st;
     for(int i = 0; i < n; i++)
     {
         memcpy((res.data+i*D), data+pos*D, sizeof(T)*D);
@@ -1406,6 +1235,79 @@ Matrix2<T> Matrix2<T>::operator()(Ind&& in)
 
     return std::move(res);
 }
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator()(Ind&& indx, Ind&& indy)
+{
+    Matrix2<T> res;
+    int stx, edx;
+    int sty, edy;
+    int nx, ny;
+
+    // compute line index ranges
+    stx = indx.slice_start;
+    if(indx.slice_start < 0)
+        stx += N;
+    edx = indx.slice_end;
+    if(indx.slice_end < 0)
+        edx += N;
+    sty = indy.slice_start;
+    if(indy.slice_start < 0)
+        sty += D;
+    edy = indy.slice_end;
+    if(indy.slice_end < 0)
+        edy += D;
+
+    // check bondary conditions
+    if(stx < 0 || stx >= N || edx < 0 || edx >= N || sty < 0 || sty >= D || edy < 0 || edy >= D)
+    {
+        cout << __FILE__ << ": " << __LINE__ << ": slice indices out of range" << endl;
+        exit(0);
+    }
+    if(((edx - stx) * indx.slice_step < 0) || ((edy - sty) * indy.slice_step < 0))
+    {
+        cout << __FILE__ << ": " << __LINE__ << ": slice start and end indices do not agree with step" << endl;
+        exit(0);
+    }
+
+    // compute result Matrix shapes
+    nx = (edx - stx) / indx.slice_step + 1;
+    ny = (edy - sty) / indy.slice_step + 1;
+
+    // pick the numbers out
+    res.init(nx,ny);
+    
+    long pos;
+    long pos0;
+    long stepx, stepy;
+    long count;
+
+    stepx = indx.slice_step * D;
+    count = 0;
+    pos0 = stx * D + sty;
+    for(int i = 0; i < nx; i++)
+    {
+        pos = pos0;
+        for(int j = 0; j < ny; j++)
+        {
+            res.data[count++] = data[pos];
+            pos += indy.slice_step;
+        }
+        pos0 += stepx;
+    }
+
+    return std::move(res);
+}
+
+
 
 
 
@@ -1886,6 +1788,180 @@ Ind Matrix2<T>::argmax()
 
 }
 
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::min(const int axis)
+{
+    Matrix2<T> res;
+    long pos;
+
+    if(axis == 0)
+    {
+        res.init(1,D);
+        for(int i = 0; i < D; i++)
+        {
+            pos = i;
+            res.data[i] = data[pos];
+            for(int j = 0; j < N-1; j++)
+            {
+                pos += D;
+                if(res.data[i] > data[pos])
+                    res.data[i] = data[pos];
+            }
+        }
+    }
+
+    else if(axis == 1)
+    {
+        res.init(N,1);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            res.data[i] = data[pos++];
+            for(int j = 0; j < D-1; j++, pos++)
+            {
+                if(res.data[i] > data[pos])
+                    res.data[i] = data[pos];
+            }
+        }
+    }
+
+    return std::move(res);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+T Matrix2<T>::min()
+{
+    T temp;
+
+    temp = data[0];
+    for(long i = 1; i < ele_num; i++)
+        if(temp > data[i])
+            temp = data[i];
+
+    return temp;
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return: Index Matrix of relevant element
+ *  */
+template<class T>
+Ind Matrix2<T>::argmin(const int axis)
+{
+    Ind res;
+    T temp;
+    long pos;
+
+    if(axis == 0)
+    {
+        res.init(D);
+        for(int i = 0; i < D; i++)
+        {
+            pos = i;
+            temp = data[pos];
+            res.datay[i] = i;
+            res.datax[i] = 0;
+            for(int j = 0; j < N-1; j++)
+            {
+                pos += D;
+                if(data[pos] < temp)
+                {
+                    temp = data[pos];
+                    res.datax[i] = j+1;
+                }
+            }
+        }
+    }
+
+    else if(axis == 1)
+    {
+        res.init(N);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            temp = data[pos++];
+            res.datax[i] = i;
+            res.datay[i] = 0;
+            for(int j = 0; j < D-1; j++, pos++)
+            {
+                if(temp > data[pos])
+                {
+                    temp = data[pos];
+                    res.datay[i] = j+1;
+                }
+            }
+        }
+    }
+
+    return std::move(res);
+
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return: Index Matrix of relevant element
+ *  */
+template<class T>
+Ind Matrix2<T>::argmin()
+{
+    Ind res;
+    T temp;
+    long pos;
+    long count; // number of max elements
+
+    temp = data[0];
+    count = 1;
+    for(long i = 0; i < ele_num; i++)
+        if(temp < data[i])
+            continue;
+        else if(temp > data[i])
+        {
+            temp = data[i];
+            count = 1; // recount
+        }
+        else
+            count++;
+
+    res.init(count);
+
+    pos = 0;
+    count = 0;
+    for(int i = 0; i < N; i++)
+        for(int j = 0; j < D; j++, pos++)
+            if(temp == data[pos])
+            {
+                res.datax[count] = i;
+                res.datay[count] = j;
+                count++;
+            }
+
+    return std::move(res);
+
+}
+
 //////////////////////////
 
 
@@ -1894,124 +1970,24 @@ Ind Matrix2<T>::argmax()
 
 
 
-//
-// class A
-// {
-//     public:
-//         double *data;
-//         int N;
-//         int D;
-//
-//         A();
-//         A(const A& a);
-//         A(A&& a);
-//         ~A();
-//         void print();
-//         A& operator=(A &a);
-//         A& operator=(A&& a);
-//         A* copy();
-// };
-//
-//
-// A& A::operator=(A& a)
-// {
-//     cout << "operator = called" <<endl;
-//     this->N = a.N;
-//     this->D = a.D;
-//     free(this->data);
-//     this->data = (double*)malloc(sizeof(double)*D*N);
-//     memcpy(this->data, a.data, a.N*a.D*sizeof(double));
-//     return *this;
-// }
-//
-//
-// A& A::operator=(A&& a)
-// {
-//     cout << "moving operator = called" <<endl;
-//     this->N = a.N;
-//     this->D = a.D;
-//     free(this->data);
-//     this->data = a.data;
-//     a.data = NULL;
-//     return *this;
-// }
-//
-//
-// // A& A::operator=(A& a)
-// // {
-// //     cout << "moving operator = called" <<endl;
-// //     this->N = a.N;
-// //     this->D = a.D;
-// //     this->data = a.data;
-// //     a.data = NULL;
-// //     return *this;
-// // }
-//
-//
-// A::A()
-// {
-//     N = 5;
-//     D = 4;
-//     data = (double*)malloc(sizeof(double)*N*D);
-//     cout << "A() called" <<endl;
-// }
-//
-// A::A(const A& a)
-// {
-//     N = a.N;
-//     D = a.D;
-//     cout << "A(A& ) called" <<endl;
-//     this->data = (double*)malloc(D*N*sizeof(double));
-//     memcpy(this->data, a.data, D*N);
-// }
-//
-//
-// A::A(A&& a)
-// {
-//     N = a.N;
-//     D = a.D;
-//     data = a.data;
-//     a.data = NULL;
-//     cout << "A(A&& ) called" <<endl;
-// }
-//
-// A::~A()
-// {
-//     cout << "destroying A" <<endl;
-//     free(data);
-// }
-//
-// // A* A::copy()
-// // {
-// //     A res;
-// //     cout << "copying object " << endl;
-// //     return &res;
-// // }
-//
-//
-// void A::print()
-// {
-//     const int DD = 5;
-//     // double *dd;
-//     //
-//     // dd = data;
-//
-//     // double *a = new double[D];
-//
-//     // d = dynamic_cast<double(*)[D]>(a);
-//
-//     double (*d)[DD];
-//     // d = new double[2][5];(double(*)[D])
-//     // d = static_cast<double (*)[5]>(malloc(sizeof(double)*10));
-//     d = reinterpret_cast<double (*)[DD]>(data);
-//     // d = (double(*)[DD])data;
-//     // int aa[D];
-//
-//
-//     // d = (double(*)[DD])this->data;
-//     for(int i = 0; i < N; i++)
-//         cout << d[i] <<endl;
-// }
+
+class A
+{
+    public:
+        double *data;
+        int N;
+        int D;
+
+        A();
+        A(const A& a);
+        A(A&& a);
+        ~A();
+        void print();
+        A& operator=(A &a);
+        A& operator=(A&& a);
+        A* copy();
+};
+
 
 
 #endif
