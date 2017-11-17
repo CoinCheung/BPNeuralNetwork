@@ -6,6 +6,7 @@
 #include"Matrix.h"
 #include<iostream>
 #include<cstring> // memcpy
+#include"numeric.h"
 
 
 
@@ -36,7 +37,7 @@ using std::memset;
  * input:
  * return:
  *  */
-Ind::Ind():ele_num(0), datax(NULL), datay(NULL), slice_start(0), slice_end(0), slice_step(0)
+Ind::Ind():ele_num(0), N(0), D(0), data(NULL)
 {
 }
 
@@ -47,7 +48,7 @@ Ind::Ind():ele_num(0), datax(NULL), datay(NULL), slice_start(0), slice_end(0), s
  * input:
  * return:
  *  */
-Ind::Ind(const int num):ele_num(num), datax(new int[num]), datay(new int[num]), slice_start(0), slice_end(0), slice_step(0)
+Ind::Ind(const int num):ele_num(num),N(num), D(1), data(new int[num])
 {
 }
 
@@ -63,13 +64,10 @@ Ind::Ind(Ind& ind)
     cout << "Ind: copying construct" << endl;
 
     ele_num = ind.ele_num;
-    slice_start = ind.slice_start;
-    slice_end = ind.slice_end;
-    slice_step = ind.slice_step;
+    N = ind.N;
+    D = ind.D;
 
-    datax = ind.datax;
-    datay = ind.datay;
-    
+    data = ind.data;
 }
 
 
@@ -84,19 +82,15 @@ Ind::Ind(Ind&& ind)
     cout << "Ind: moving construct" << endl;
 
     ele_num = ind.ele_num;
-    slice_start = ind.slice_start;
-    slice_end = ind.slice_end;
-    slice_step = ind.slice_step;
+    N = ind.N;
+    D = ind.D;
 
-    datax = ind.datax;
-    datay = ind.datay;
+    data = ind.data;
     
-    // ind.slice_start = 0;
-    // ind.slice_end = 0;
-    // ind.slice_step = 0;
-    // ind.ele_num = 0;
-    ind.datax = NULL;
-    ind.datay = NULL;
+    ind.N = 0;
+    ind.D = 0;
+    ind.ele_num = 0;
+    ind.data = NULL;
 }
 
 
@@ -111,18 +105,12 @@ Ind& Ind::operator=(Ind&& ind)
     cout << "Ind: moving assignment" << endl;
 
     this->ele_num = ind.ele_num;
-    this->slice_start = ind.slice_start;
-    this->slice_end = ind.slice_end;
-    this->slice_step = ind.slice_step;
-    this->datax = ind.datax;
-    this->datay = ind.datay;
+    this->N = ind.N;
+    this->D = ind.D;
+    this->data = ind.data;
 
-    ind.slice_start = 0;
-    ind.slice_end = 0;
-    ind.slice_end = 0;
     ind.ele_num = 0;
-    ind.datax = NULL;
-    ind.datay = NULL;
+    ind.data = NULL;
 
     return *this;
 }
@@ -137,15 +125,13 @@ Ind& Ind::operator=(Ind&& ind)
  *  */
 Ind::~Ind()
 {
-    delete[] datax;
-    delete[] datay;
+    delete[] data;
+    cout << "Ind deconstruction" << endl;
 
-    slice_start = 0;
-    slice_end = 0;
-    slice_end = 0;
+    N = 0;
+    D = 0;
     ele_num = 0;
-    datax = NULL;
-    datay = NULL;
+    data = NULL;
 }
 
 
@@ -159,9 +145,11 @@ Ind::~Ind()
 void Ind::print()
 {
 
+    cout << "[" << endl;
     if(ele_num != 0)
         for(long i = 0; i < ele_num; i++)
-            cout << "(" << datax[i] << ", " << datay[i] << ")" << endl;
+            cout << data[i] << ", " << endl;
+    cout << "]" << endl;
 
 }
 
@@ -174,14 +162,11 @@ void Ind::print()
  *  */
 void Ind::free()
 {
-    delete[] datax;
-    delete[] datay;
-    slice_start = 0;
-    slice_end = 0;
-    slice_end = 0;
+    delete[] data;
+    N = 0;
+    D = 0;
     ele_num = 0;
-    datax = NULL;
-    datay = NULL;
+    data = NULL;
 }
 
 
@@ -195,27 +180,64 @@ void Ind::free()
 void Ind::init(const int num)
 {
     ele_num = num;
-    delete [] datax;
-    delete [] datay;
-    datax = new int[ele_num];
-    datay = new int[ele_num];
+    N = num;
+    D = 1;
+    delete [] data;
+    data = new int[ele_num];
+}
+
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+Ind Ind::randchoice(int batch_size, int N)
+{
+    Ind res(batch_size);
+    for(int i = 0; i < batch_size; i++)
+        res.data[i] = rand() % N;
+
+    return std::move(res);
 }
 
 
 
 
 /* function:
- * instruction: get the slice index with one number, works like a[ar:] in numpy
+ * instruction: 
  * input:
  * return:
  *  */
-Ind Ind::slice(int start, int end, int step)
+Ind Ind::arange(const int a)
 {
-    Ind res;
+    Ind res(a);
 
-    res.slice_start = start; 
-    res.slice_end = end;
-    res.slice_step = step;
+    for(int i = 0; i < a; i++)
+        res.data[i] = i;
+
+    return std::move(res);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+Ind Ind::arange(const int a, const int b)
+{
+    Ind res(b-a);
+    int num;
+
+    num = a;
+    for(int i = 0; i < res.ele_num; i++, num++)
+        res.data[i] = num;
 
     return std::move(res);
 }

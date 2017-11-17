@@ -2,7 +2,7 @@ CppC = g++
 CFLAGs = -c -g -std=c++11
 LFLAGs = -lm -ltcmalloc -lopenblas
 ODIR = ./build
-_OBJs = main.o BP.o Matrix.o
+_OBJs = main.o Matrix.o numeric.o BP.o
 
 OBJs = $(patsubst %.o, $(ODIR)/%.o, $(_OBJs))
 
