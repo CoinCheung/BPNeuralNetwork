@@ -10,7 +10,8 @@ main: $(OBJs)
 	$(CC) -o $@ $^ $(LFLAGs)
 
 $(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGs) $< -o $@
 
 clean:
-	rm ./$(BUILD_DIR)/* main test
+	rm ./$(BUILD_DIR) main test

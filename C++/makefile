@@ -11,9 +11,10 @@ main: $(OBJs)
 	$(CppC) -o $@ $(LFLAGs) $^ 
 
 $(ODIR)/%.o: %.cpp
+	@mkdir -p $(ODIR)
 	$(CppC) -o $@ $< $(CFLAGs)
 
 
 clean:
-	rm main $(ODIR)/*
+	rm -rf main $(ODIR) 
 
