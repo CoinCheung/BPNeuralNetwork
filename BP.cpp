@@ -1,25 +1,15 @@
 #include"BP.h"
-
-
-
-/* ===============================================================
- * includes
- * =============================================================== */
+#include"Matrix/Matrix.h"
+#include"Layers/FullyConnected.h"
+#include"Layers/ReLU.h"
+#include"Layers/Softmax.h"
+#include<vector>
 #include<iostream>
 
 
 
-
-/* ===============================================================
- * macros and types
- * =============================================================== */
 #define _DEBUG_
 
-
-
-/* ===============================================================
- * implementations
- * =============================================================== */
 
 
 /* function:
@@ -31,7 +21,63 @@ BPnet::BPnet(): in_size(0), out_size(0), hlayer_num(0), hiden_size(NULL), W(NULL
 {}
 
 
+BPnet::BPnet(std::vector<int>& FC_nums)
+{
+    int layer_num  = FC_nums.size();
+    int hidden_nums;
 
+    layers.reserve(3*layer_num); 
+    for(auto i{0}; i < layer_num-1; i++)
+    {
+        hidden_nums = FC_nums[i];
+        layers.push_back(FullyConnected(new FC_Layer(hidden_nums)));
+        layers.push_back(RELU(new ReLU_Layer));
+    }
+    hidden_nums = FC_nums[layer_num-1];
+    layers.push_back(FullyConnected(new FC_Layer(hidden_nums)));
+}
+
+
+MATRIX BPnet::forward(MATRIX& mat)
+{
+    using namespace std;
+
+
+    for(auto& layer:layers)
+    {
+        mat = layer->forward(mat);
+    }
+
+    MATRIX Loss = softmax.forward(mat);
+
+    return Loss;
+}
+
+
+MATRIX BPnet::backward(MATRIX& loss)
+{
+    MATRIX grad;
+
+    grad = softmax.backward(loss);
+
+    auto len = layers.size();
+    for(auto i{len-1}; i>=0; i--)
+    {
+        grad = layers[i]->backward(grad);
+    }
+
+    return grad;
+}
+
+
+void BPnet::train()
+{
+    MATRIX mat;
+    
+    mat = input;
+    MATRIX Loss = BPnet::forward(mat);
+    BPnet::backward(Loss);
+}
 
 
 /* function:

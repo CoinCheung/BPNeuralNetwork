@@ -1,24 +1,21 @@
 #ifndef _BPNET_H_
 #define _BPNET_H_
 
-/* ===============================================================
- * includes
- * =============================================================== */
-#include"Matrix.h"
+#include"Matrix/Matrix.h"
+#include"Layers/Layer.h"
+#include"Layers/ReLU.h"
+#include"Layers/FullyConnected.h"
+#include"Layers/Softmax.h"
 #include<vector>
+#include<memory>
 
 
 
+typedef std::shared_ptr<Matrix2<double>> MATRIX;
+typedef std::shared_ptr<Layer> LAYER;
+typedef std::shared_ptr<FC_Layer> FullyConnected;
+typedef std::shared_ptr<ReLU_Layer> RELU;
 
-/* ===============================================================
- * usings
- * =============================================================== */
-
-
-
-/* ===============================================================
- * definitions
- * =============================================================== */
 
 // class of BPnet
 class BPnet
@@ -33,6 +30,17 @@ class BPnet
         Matrix2<double> *b;
         Matrix2<double> *dW;
         Matrix2<double> *db;
+
+//////////////
+        BPnet(std::vector<int>& layer_nums);
+        std::vector<LAYER> layers;
+        Softmax softmax;
+        MATRIX input;
+//////////////
+
+        void train();
+        MATRIX forward(MATRIX&);
+        MATRIX backward(MATRIX&);
 
         /* constructions */
         BPnet();

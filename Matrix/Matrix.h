@@ -21,7 +21,7 @@
 #include<cstring> // memcpy
 #include<cmath>
 #include<valarray>
-#include"numeric.h"
+#include"../numeric.h"
 
 extern "C"
 {
@@ -101,11 +101,11 @@ class Matrix2
         T *data; 
 
         // functions
-        Matrix2();
-        Matrix2(int n, int d);
-        Matrix2(int n);
-        Matrix2(Matrix2& m); // copy construction
-        Matrix2(Matrix2&& m); // moving construction
+        explicit Matrix2();
+        explicit Matrix2(int n, int d);
+        explicit Matrix2(int n);
+        explicit Matrix2(Matrix2& m); // copy construction
+        explicit Matrix2(Matrix2&& m); // moving construction
         ~Matrix2();
 
         Matrix2& operator=(Matrix2& m); // copy assignment
