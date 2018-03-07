@@ -1,22 +1,30 @@
 CPP = g++
-CFLAGs = -c -std=c++11
+ROOT = $(shell pwd)
+CFLAGs = -c -I$(ROOT)/Matrix -I$(ROOT)/Math -I$(ROOT)/Layers #-std=c++11 
 LFLAGs = -lm -ltcmalloc -lopenblas 
-ODIR = ./build
-_OBJs = main.o numeric.o BP.o
-MDIR = ./Matrix
-_MOBJs = Matrix.o 
 
 
-OBJs = $(patsubst %.o, $(ODIR)/%.o, $(_OBJs)) 
-OBJs += $(patsubst %.o, $(MDIR)/%.o, $(_MOBJs)) 
+SUBDIRs = ./Matrix ./Math ./Layers
+ODIR = $(ROOT)/build
+CURR_SRCs = $(wildcard *.cpp)
+CURR_OBJs = $(patsubst %.cpp, %.o, $(CURR_SRCs))
+OBJs = $(wildcard $(ODIR)/*.o)
+
+export CPP CFLAGs ROOT ODIR 
 
 
-main: $(OBJs) 
-	$(CPP) $^ $(LFLAGs) -o $@  
+main: $(CURR_OBJs) $(SUBDIRs) 
+	@echo $(CURR_OBJs)
+	$(CPP) $(OBJs) -o $@ $(LFLAGs)
 
-$(ODIR)/%.o: %.cpp
+$(CURR_OBJs):%.o: %.cpp
 	@mkdir -p $(ODIR)
-	$(CPP) -o $@ $< $(CFLAGs)
+	$(CPP) -o $(ODIR)/$@ $< $(CFLAGs)
+
+$(SUBDIRs)::
+	$(MAKE) -C $@
+
+
 
 
 clean:

@@ -21,7 +21,7 @@
 #include<cstring> // memcpy
 #include<cmath>
 #include<valarray>
-#include"../numeric.h"
+#include"numeric.h"
 
 extern "C"
 {

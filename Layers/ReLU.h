@@ -3,17 +3,17 @@
 
 
 #include<memory>
-#include"Matrix/Matrix.h"
+#include"Matrix.hpp"
 #include"Layer.h"
 
 
-typedef std::shared_ptr<Matrix2<double>> MATRIX;
+typedef Matrix2<double> MATRIX;
 
 
 class ReLU_Layer:public Layer
 {
     public:
-        explicit ReLU_Layer();
+        ReLU_Layer();
 
         MATRIX forward(MATRIX&);
         MATRIX backward(MATRIX&);

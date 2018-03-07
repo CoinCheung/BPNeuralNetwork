@@ -3,17 +3,18 @@
 
 
 #include<memory>
-#include"Matrix/Matrix.h"
+#include"Matrix.hpp"
 
 
-typedef std::shared_ptr<Matrix2<double>> MATRIX;
+typedef Matrix2<double> MATRIX;
 
 // base class for other layers
 class Layer
 {
     public:
-        virtual MATRIX forward(MATRIX);
-        virtual MATRIX backward(MATRIX);
+        virtual MATRIX forward(MATRIX&)=0;
+        virtual MATRIX backward(MATRIX&)=0;
+        virtual ~Layer(){};
 };
 
 

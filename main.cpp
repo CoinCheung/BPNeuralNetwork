@@ -1,10 +1,11 @@
-#include"Matrix/Matrix.h"
+#include<Matrix.hpp>
+#include<numeric.h>
 #include"BP.h"
 #include<iostream>
+#include<string>
+#include<vector>
 
 
-using std::cout;
-using std::endl;
 
 
 
@@ -16,6 +17,8 @@ void testBP();
 
 int main(void)
 {
+    using namespace std;
+
     double r = 8.8;
     int i = r;
 
@@ -27,7 +30,9 @@ int main(void)
     // *data = static_cast<double>(id[0]);
 
 
-    // testMatrix();
+    cout << "here" << endl;
+    cout << gaussian_rand() << endl;
+    testMatrix();
 
     testBP();
 
@@ -39,56 +44,78 @@ int main(void)
 
 void testBP()
 {
-    int in_size = 4;
-    int hiden_num = 1;
-    int *hiden_size = new int(10);
-    int out_size = 3;
+    using namespace std;
 
-    BPnet bp(in_size, hiden_num, hiden_size, out_size, 1e-1);
-    // bp.printWb();
-    // bp.train();
+    vector<int> hidden_nums;
 
-    // toy training setup
-    int num_inputs;
-    num_inputs = 5;
-    Matrix2<double> X = 10.0 * Matrix2<double>::randn(num_inputs, in_size);
-    Matrix2<double> y = Matrix2<double>::zeros(num_inputs,1);
-    y(0) = 0;
-    y(1) = 1;
-    y(2) = 2;
-    y(3) = 2;
-    y(4) = 1;
+    hidden_nums.reserve(2);
+    hidden_nums.push_back(10);
+    hidden_nums.push_back(15);
 
-    // X.print();y.print();
+    BPnet net(hidden_nums, "gaussian");
 
-    // cout << "loss is: " << bp.loss_softmax(X,y,0) << endl;
-
-    bp.train(X, y, X, y, 200, 5e-6, 1e-1, 0.95, 1);
-
-
-
-    // Matrix2<double> m = Matrix2<double>::arange(36).reshape(6,6);
-    // Matrix2<double> res;
-    // m(1,1) = -1;
-    // m(3,1) = -1;
-    // m(2,1) = -1;
-    // m(1,5) = -1;
-    //
-    // m.print();
-    // res = BPnet::activate_relu(m);
-    // m.print();
-    // cout << "here" <<endl;
-    // res.print();
+    Matrix2<double> in(Matrix2<double>::ones(3,3));
+    // in.print();
+    net.forward(in);
+    
+    // net.train();
 }
+
+
+
+// void testBP()
+// {
+//     int in_size = 4;
+//     int hiden_num = 1;
+//     int *hiden_size = new int(10);
+//     int out_size = 3;
+//
+//     BPnet bp(in_size, hiden_num, hiden_size, out_size, 1e-1);
+//     // bp.printWb();
+//     // bp.train();
+//
+//     // toy training setup
+//     int num_inputs;
+//     num_inputs = 5;
+//     Matrix2<double> X = 10.0 * Matrix2<double>::randn(num_inputs, in_size);
+//     Matrix2<double> y = Matrix2<double>::zeros(num_inputs,1);
+//     y(0) = 0;
+//     y(1) = 1;
+//     y(2) = 2;
+//     y(3) = 2;
+//     y(4) = 1;
+//
+//     // X.print();y.print();
+//
+//     // cout << "loss is: " << bp.loss_softmax(X,y,0) << endl;
+//
+//     // bp.train(X, y, X, y, 200, 5e-6, 1e-1, 0.95, 1);
+//     testMatrix();
+//
+//
+//
+//     // Matrix2<double> m = Matrix2<double>::arange(36).reshape(6,6);
+//     // Matrix2<double> res;
+//     // m(1,1) = -1;
+//     // m(3,1) = -1;
+//     // m(2,1) = -1;
+//     // m(1,5) = -1;
+//     //
+//     // m.print();
+//     // res = BPnet::activate_relu(m);
+//     // m.print();
+//     // cout << "here" <<endl;
+//     // res.print();
+// }
 
 
 
 void testMatrix()
 {
-    Matrix2<double> m;
-    Matrix2<double> n;
-    Matrix2<double> res;
-
+    // Matrix2<double> m;
+    // Matrix2<double> n;
+    // Matrix2<double> res;
+    //
     // m = Matrix2<double>::arange(1,25).reshape(8,3);
     // m.print();
     // m(Ind::slice(0,m.N-1)).print();
@@ -200,28 +227,31 @@ void testMatrix()
     // inn = Ind::arange(4,15);
     // inn.print();inn.free();
 
+
     // Matrix2<double> mm;
     // mm = 0.5 + Matrix2<double>::arange(16).reshape(4,4);
     // mm.print();
+
     // mm.toInd().print();
 
-    Matrix2<double> mm;
-    Ind ind(4);
-    ind.data[0] = 2;
-    ind.data[1] = 0;
-    ind.data[2] = 3;
-    ind.data[3] = 1;
-    mm = 0.5 + Matrix2<double>::arange(16).reshape(4,4);
-    mm.print();
-    mm.toInd().print();
-    mm.set(Ind::arange(mm.N), std::move(ind), 1.0);
-    mm.print();
+    // Matrix2<double> mm;
+    // Ind ind(4);
+    // ind.data[0] = 2;
+    // ind.data[1] = 0;
+    // ind.data[2] = 3;
+    // ind.data[3] = 1;
+    // mm = 0.5 + Matrix2<double>::arange(16).reshape(4,4);
+    // mm.print();
+    // mm.toInd().print();
+    // mm.set(Ind::arange(mm.N), std::move(ind), 1.0);
+    // mm.print();
+    //
+    // m = mm.copy();
+    // m.print();
+    // mm.print();
+    // m.data[3] = 1000;
+    // m.print();mm.print();
 
-    m = mm.copy();
-    m.print();
-    mm.print();
-    m.data[3] = 1000;
-    m.print();mm.print();
 
     
 }

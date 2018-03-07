@@ -3,17 +3,17 @@
 
 
 #include<memory>
-#include"Matrix/Matrix.h"
+#include"Matrix.hpp"
 
-typedef std::shared_ptr<Matrix2<double>> MATRIX;
+typedef Matrix2<double> MATRIX;
 
 
 class Softmax
 {
     public:
-        explicit Softmax();
-        MATRIX forward(MATRIX);
-        MATRIX backward(MATRIX);
+        Softmax();
+        MATRIX forward(MATRIX&);
+        MATRIX backward(MATRIX&);
 
 
 };
