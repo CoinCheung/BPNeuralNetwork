@@ -33,12 +33,12 @@ class BPnet
 //////////////
 // added
 
-        std::vector<LAYER> layers;
+        std::vector<FullyConnected> layers;
         Softmax softmax;
         Matrix2<double> input;
         std::string init_method;
 
-        BPnet(std::vector<int>& layer_nums, const char* init_method);
+        BPnet(std::vector<int>& layer_nums, const char* act_type, const char* init_method);
 
         void train();
         Matrix2<double> forward(Matrix2<double>&);

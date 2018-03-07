@@ -11,20 +11,24 @@
 typedef Matrix2<double> MATRIX;
 
 
-BPnet::BPnet(std::vector<int>& FC_nums, const char* i_mthd)
+BPnet::BPnet(std::vector<int>& FC_nums, const char* act_type, const char* i_mthd)
 {
+    using namespace std;
+
+
     int layer_num = FC_nums.size();
     int hidden_nums;
+    FullyConnected fc_layer;
 
     layers.reserve(3*layer_num);
     for(auto i{0}; i < layer_num-1; i++)
     {
         hidden_nums = FC_nums[i];
-        layers.push_back(FullyConnected(new FC_Layer(hidden_nums)));
-        layers.push_back(RELU(new ReLU_Layer));
+        fc_layer.reset(new FC_Layer(hidden_nums, act_type, i_mthd));
+        layers.push_back(fc_layer);
     }
     hidden_nums = FC_nums[layer_num-1];
-    layers.push_back(FullyConnected(new FC_Layer(hidden_nums)));
+    layers.push_back(FullyConnected(new FC_Layer(hidden_nums, "", i_mthd)));
 
     init_method = std::string(i_mthd);
 }
@@ -35,10 +39,7 @@ BPnet::BPnet(std::vector<int>& FC_nums, const char* i_mthd)
 
 MATRIX BPnet::forward(MATRIX& in_mat)
 {
-    using namespace std;
-
     Matrix2<double> mat = in_mat;
-
 
     for(auto& layer:layers)
     {
@@ -47,6 +48,7 @@ MATRIX BPnet::forward(MATRIX& in_mat)
 
     MATRIX Loss;
     Loss = softmax.forward(mat);
+    Loss = mat;
 
     return Loss;
 }

@@ -1,7 +1,7 @@
 CPP = g++
 ROOT = $(shell pwd)
-CFLAGs = -c -I$(ROOT)/Matrix -I$(ROOT)/Math -I$(ROOT)/Layers #-std=c++11 
-LFLAGs = -lm -ltcmalloc -lopenblas 
+CFLAGs = -c -I$(ROOT)/Matrix -I$(ROOT)/Math -I$(ROOT)/Layers -std=c++11 
+LFLAGs = -lm -ltcmalloc
 
 
 SUBDIRs = ./Matrix ./Math ./Layers

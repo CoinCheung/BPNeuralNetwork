@@ -34,7 +34,7 @@ int main(void)
     cout << gaussian_rand() << endl;
     testMatrix();
 
-    testBP();
+    // testBP();
 
     return 0;
 
@@ -49,14 +49,25 @@ void testBP()
     vector<int> hidden_nums;
 
     hidden_nums.reserve(2);
-    hidden_nums.push_back(10);
-    hidden_nums.push_back(15);
+    hidden_nums.push_back(4);
+    hidden_nums.push_back(5);
 
-    BPnet net(hidden_nums, "gaussian");
+    BPnet net(hidden_nums, "relu", "gaussian");
 
-    Matrix2<double> in(Matrix2<double>::ones(3,3));
-    // in.print();
-    net.forward(in);
+    // MATRIX in(MATRIX::ones(3,3));
+    MATRIX in = MATRIX::arange(12).reshape(4,3);
+
+    // auto fl = FullyConnected(new FC_Layer(10, "relu", "gaussian"));
+    // FC_Layer fl(10, "relu", "gaussian");
+    // cout << "hidden numbers: " << fl.get()->hidden_num << endl;
+    // cout << "init_method: " << fl.get()->init_method << endl;
+
+    MATRIX Loss = net.forward(in);
+    Loss.print();
+    // auto layers = net.layers;
+    // net.layers[0]->get_weight().print();
+
+
     
     // net.train();
 }
@@ -112,6 +123,8 @@ void testBP()
 
 void testMatrix()
 {
+    using namespace std;
+
     // Matrix2<double> m;
     // Matrix2<double> n;
     // Matrix2<double> res;
@@ -251,7 +264,48 @@ void testMatrix()
     // mm.print();
     // m.data[3] = 1000;
     // m.print();mm.print();
+    //
+    // MATRIX mm1 = MATRIX::arange(20).reshape(4,5);
+    // mm1.print();
+    // MATRIX mm2 = MATRIX::arange(30).reshape(5,6);
+    // mm2.print();
+    // MATRIX md = MATRIX::arange(0);
+    // md.print();
+    // cout << md.data.get() << endl;
+    // cout << "dot multiplication" << endl;
+    // MATRIX mm = mm1.dot(mm2);
+    // mm.print();
 
+    // MATRIX mm1 = MATRIX::arange(1,21).reshape(4,5);
+    // mm1.print();
+    // MATRIX mm2 = MATRIX::arange(2,22).reshape(4,5);
+    // mm2.print();
+    // MATRIX mm = mm1/mm2;
+    // mm.print();
+
+    // MATRIX mm1 = MATRIX::arange(1,21).reshape(4,5);
+    // mm1.print();
+    // MATRIX mm2 = MATRIX::arange(2,7);
+    // mm2.print();
+    // MATRIX mm = mm2/mm1;
+    // mm.print();
+
+
+    unsigned int f;
+    f = -1;
+    cout << f << endl;
+
+    MATRIX mm1 = MATRIX::arange(1,25).reshape(4,6);
+    cout << mm1.data.get() << endl;
+    mm1.print();
+    MATRIX mm2 = mm1.copy();
+    mm2.print();
+    mm2 = mm1.exp();
+    mm2.print();
+    mm1.print();
+
+    mm2 = mm1.sum(1);
+    mm2.print();
 
     
 }
