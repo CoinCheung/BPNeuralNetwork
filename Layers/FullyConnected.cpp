@@ -19,7 +19,9 @@ FC_Layer& FC_Layer::operator=(FC_Layer& fl)
     hidden_num = fl.hidden_num;
     init_method = fl.init_method;
     weight = fl.weight;
-    grad = fl.grad;
+    bias = fl.bias;
+    gradW = fl.gradW;
+    gradb = fl.gradb;
 
     return *this;
 }
@@ -31,7 +33,9 @@ FC_Layer& FC_Layer::operator=(FC_Layer&& fl)
     hidden_num = fl.hidden_num;
     init_method = fl.init_method;
     weight = fl.weight;
-    grad = fl.grad;
+    bias = fl.bias;
+    gradW = fl.gradW;
+    gradb = fl.gradb;
 
     return *this;
 }
@@ -51,7 +55,8 @@ MATRIX FC_Layer::initialize(int N, int D, const char* init_mthd)
         pd = mat.data.get();
         size = mat.ele_num;
         for(long i{0}; i < size; i++)
-            pd[i] = gaussian_rand(0, 0.02);
+            // pd[i] = gaussian_rand(0, 0.02);
+            pd[i] = i/10.0;
     }
     else
     {
@@ -71,30 +76,60 @@ MATRIX FC_Layer::get_weight()
 
 
 
-MATRIX FC_Layer::get_grad()
+MATRIX FC_Layer::get_bias()
 {
-    return grad;
+    return bias;
 }
 
 
 
-MATRIX FC_Layer::forward(MATRIX& input)
+MATRIX FC_Layer::get_gradW()
+{
+    return gradW;
+}
+
+
+
+MATRIX FC_Layer::get_gradb()
+{
+    return gradb;
+}
+
+
+
+MATRIX FC_Layer::forward(MATRIX input)
 {
 
     if(weight.data == nullptr)
     {
         weight = initialize(input.D, hidden_num, "gaussian");
-        grad = initialize(input.D, hidden_num, "gaussian");
+        bias = MATRIX::zeros(1, hidden_num);
     }
 
-    MATRIX mat = input.dot(weight);
+    in_mat = input;
+    MATRIX mat = input.dot(weight) + bias;
 
     return mat;
-
-
 }
 
-MATRIX FC_Layer::backward(MATRIX& grad)
+
+
+MATRIX FC_Layer::backward(MATRIX grad_pre)
+{
+    MATRIX mat;
+
+    gradW = in_mat.transpose().dot(grad_pre);
+    gradb = MATRIX::ones(1, in_mat.N).dot(grad_pre);
+    mat = grad_pre.dot(weight.transpose());
+
+    return mat;
+}
+
+
+
+void FC_Layer::update()
 {
 
 }
+
+

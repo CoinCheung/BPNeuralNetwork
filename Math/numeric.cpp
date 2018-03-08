@@ -1,4 +1,6 @@
 #include"numeric.h"
+#include<cmath>
+#include<time.h>
 
 
 
@@ -13,7 +15,7 @@ double gaussian_rand(double mu, double sigma)
     double u1,u2;
     double R, theta;
 
-    // srand(time(NULL));
+    srand(time(NULL));
     
     u1 = (double)rand()/RAND_MAX; 
     u2 = (double)rand()/RAND_MAX;
@@ -38,7 +40,7 @@ double gaussian_rand()
     double u1,u2;
     double R, theta;
 
-    // srand(time(NULL));
+    srand(time(NULL));
     
     u1 = (double)rand()/RAND_MAX; 
     u2 = (double)rand()/RAND_MAX;

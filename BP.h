@@ -6,6 +6,7 @@
 #include"ReLU.h"
 #include"FullyConnected.h"
 #include"Softmax.h"
+#include"CrossEntropy.h"
 #include<vector>
 #include<memory>
 
@@ -34,15 +35,16 @@ class BPnet
 // added
 
         std::vector<FullyConnected> layers;
-        Softmax softmax;
-        Matrix2<double> input;
+        Softmax SoftmaxLayer;
+        CrossEntropyLoss ce_loss;
         std::string init_method;
 
         BPnet(std::vector<int>& layer_nums, const char* act_type, const char* init_method);
 
-        void train();
-        Matrix2<double> forward(Matrix2<double>&);
-        Matrix2<double> backward(Matrix2<double>&);
+        void train(MATRIX, MATRIX);
+        MATRIX forward(MATRIX);
+        MATRIX backward(MATRIX);
+        void update();
 
 //////////////
 

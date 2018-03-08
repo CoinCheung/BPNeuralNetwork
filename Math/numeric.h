@@ -1,14 +1,6 @@
 #ifndef _NUMERIC_H_
 #define _NUMERIC_H_
 
-#include<stdlib.h>
-#include<math.h>
-#include<stdio.h>
-#include<time.h>
-#include<malloc.h>
-#include<stdbool.h>
-#include<string.h>
-
 
 #define PI 3.141592653
 

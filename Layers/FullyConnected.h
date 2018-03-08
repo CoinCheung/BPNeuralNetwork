@@ -15,8 +15,11 @@ class FC_Layer: public Layer
     public:
         int hidden_num;
         std::string init_method;
+        MATRIX in_mat;
         MATRIX weight;
-        MATRIX grad;
+        MATRIX bias;
+        MATRIX gradW;
+        MATRIX gradb;
 
         explicit FC_Layer(int hidden_num, const char* act_type, const char* init_mthd);
 
@@ -26,10 +29,13 @@ class FC_Layer: public Layer
 
         MATRIX initialize(int N, int D, const char* init_mthd);
         MATRIX get_weight();
-        MATRIX get_grad();
+        MATRIX get_bias();
+        MATRIX get_gradW();
+        MATRIX get_gradb();
 
-        MATRIX forward(MATRIX&);
-        MATRIX backward(MATRIX&);
+        MATRIX forward(MATRIX);
+        MATRIX backward(MATRIX);
+        void update();
 
         ~FC_Layer(){}
 

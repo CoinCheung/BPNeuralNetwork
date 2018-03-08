@@ -15,11 +15,9 @@ class ReLU_Layer:public Layer
     public:
         ReLU_Layer();
 
-        MATRIX get_weight();
-        MATRIX get_grad();
-
-        MATRIX forward(MATRIX&);
-        MATRIX backward(MATRIX&);
+        MATRIX forward(MATRIX);
+        MATRIX backward(MATRIX);
+        void update();
 
         
 };

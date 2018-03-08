@@ -13,8 +13,8 @@ class Softmax
 {
     public:
         Softmax();
-        MATRIX forward(MATRIX&);
-        MATRIX backward(MATRIX&);
+        MATRIX forward(MATRIX);
+        MATRIX backward(MATRIX);
 
 
 };

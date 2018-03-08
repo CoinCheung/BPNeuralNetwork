@@ -8,12 +8,12 @@
 
 typedef Matrix2<double> MATRIX;
 
-class CrossEntropy 
+class CrossEntropyLoss
 {
     public:
-        CrossEntropy();
-        MATRIX forward(MATRIX&, MATRIX&);
-        MATRIX backward(MATRIX&);
+        CrossEntropyLoss();
+        MATRIX forward(MATRIX, MATRIX);
+        MATRIX backward(MATRIX);
 };
 
 #endif

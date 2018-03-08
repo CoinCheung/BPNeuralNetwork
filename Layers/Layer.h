@@ -12,10 +12,9 @@ typedef Matrix2<double> MATRIX;
 class Layer
 {
     public:
-        virtual MATRIX get_weight()=0;
-        virtual MATRIX get_grad()=0;
-        virtual MATRIX forward(MATRIX&)=0;
-        virtual MATRIX backward(MATRIX&)=0;
+        virtual MATRIX forward(MATRIX)=0;
+        virtual MATRIX backward(MATRIX)=0;
+        virtual void update()=0;
         virtual ~Layer(){};
 };
 
