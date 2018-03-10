@@ -3,11 +3,8 @@
 
 
 #include<memory>
-#include"Matrix.hpp"
+#include"Matrix.h"
 
-
-typedef double DataType;
-typedef Matrix2<DataType> MATRIX;
 
 
 class SoftmaxCrossEntropy
@@ -19,8 +16,6 @@ class SoftmaxCrossEntropy
         SoftmaxCrossEntropy();
         MATRIX forward(MATRIX, MATRIX);
         MATRIX backward();
-
-
 };
 
 #endif

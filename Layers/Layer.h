@@ -3,11 +3,10 @@
 
 
 #include<memory>
-#include"Matrix.hpp"
+#include"Matrix.h"
 #include"Optimizer.h"
 
 
-typedef Matrix2<double> MATRIX;
 
 
 // base class for other layers
@@ -20,6 +19,7 @@ class Layer
         virtual ~Layer(){};
 };
 
+typedef std::shared_ptr<Layer> LAYER;
 
 
 #endif

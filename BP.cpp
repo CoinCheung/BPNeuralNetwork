@@ -1,5 +1,5 @@
 #include"BP.h"
-#include"Matrix.hpp"
+#include"Matrix.h"
 #include"Layer.h"
 #include"FullyConnected.h"
 #include"ReLU.h"
@@ -7,12 +7,15 @@
 #include<vector>
 #include<iostream>
 #include<string>
-#include<memory>
 
 
 
-typedef std::shared_ptr<FC_Layer> FullyConnected;
-typedef std::shared_ptr<ReLU_Layer> RELU;
+
+BPnet::BPnet()
+{
+
+}
+
 
 
 
@@ -22,7 +25,7 @@ BPnet::BPnet(std::vector<int>& FC_nums, const char* i_mthd, OPTIMIZER opt)
 
     int layer_num = FC_nums.size();
     int hidden_nums;
-    FullyConnected fc_layer;
+    FULLY_CONNECTED fc_layer;
     RELU relu_layer;
 
     layers.reserve(3*layer_num);
@@ -36,11 +39,43 @@ BPnet::BPnet(std::vector<int>& FC_nums, const char* i_mthd, OPTIMIZER opt)
         layers.push_back(relu_layer);
     }
     hidden_nums = FC_nums[layer_num-1];
-    layers.push_back(FullyConnected(new FC_Layer(hidden_nums, i_mthd)));
+    layers.push_back(FULLY_CONNECTED(new FC_Layer(hidden_nums, i_mthd)));
 
     init_method = std::string(i_mthd);
 }
 
+
+
+
+BPnet::BPnet(BPnet& net)
+{
+    layers = net.layers;
+    LossFunc = net.LossFunc;
+    optimizer = net.optimizer;
+    init_method = net.init_method;
+}
+
+
+
+BPnet::BPnet(BPnet&& net)
+{
+    layers.swap(net.layers);
+    LossFunc = net.LossFunc;
+    optimizer = net.optimizer;
+    init_method = net.init_method;
+}
+
+
+
+BPnet& BPnet::operator=(BPnet net)
+{
+    layers = net.layers;
+    LossFunc = net.LossFunc;
+    optimizer = net.optimizer;
+    init_method = net.init_method;
+    
+    return *this;
+}
 
 
 
@@ -89,13 +124,12 @@ void BPnet::train(MATRIX in_mat, MATRIX label)
     MATRIX Loss;
     MATRIX scores;
     MATRIX grad;
-
-    FullyConnected l1 = std::static_pointer_cast<FC_Layer>(layers[0]);
+    static long iter_num = 0;
 
     // forward
     scores = forward(in_mat);
     Loss = LossFunc.forward(scores, label);
-    std::cout << "loss:" << std::endl;
+    std::cout << "iteration: " << iter_num << ",   loss:" << std::endl;
     Loss.print();
 
     // backward
@@ -104,6 +138,8 @@ void BPnet::train(MATRIX in_mat, MATRIX label)
 
     // update network
     update();
+
+    iter_num++;
 
 }
 

@@ -1,38 +1,39 @@
 #ifndef _BPNET_H_
 #define _BPNET_H_
 
-#include"Matrix.hpp"
+#include"Matrix.h"
 #include"Layer.h"
-#include"ReLU.h"
-#include"FullyConnected.h"
 #include"SoftmaxCrossEntropy.h"
 #include"Optimizer.h"
 #include<vector>
-#include<memory>
 
 
-typedef Matrix2<double> MATRIX;
-
-typedef std::shared_ptr<Layer> LAYER;
 
 
 // class of BPnet
 class BPnet
 {
     public:
-
-        std::vector<std::shared_ptr<Layer>> layers;
+        // data members
+        std::vector<LAYER> layers;
         SoftmaxCrossEntropy LossFunc;
         OPTIMIZER optimizer;
         std::string init_method;
 
+        // constructors
+        BPnet();
         BPnet(std::vector<int>& layer_nums, const char* init_method, OPTIMIZER optimizer);
+        BPnet(BPnet &);
+        BPnet(BPnet &&);
 
-        void train(MATRIX, MATRIX);
+        // operators
+        BPnet& operator=(BPnet);
+
+        // memeber functions
         MATRIX forward(MATRIX);
         MATRIX backward(MATRIX, OPTIMIZER);
         void update();
-
+        void train(MATRIX, MATRIX);
 };
 
 

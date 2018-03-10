@@ -2,21 +2,18 @@
 #define _SGD_H_
 
 #include"Optimizer.h"
-#include"Matrix.hpp"
-
-
-typedef Matrix2<double> MATRIX;
+#include"Matrix.h"
 
 
 class SGD: public Optimizer
 {
     public:
-        double learning_rate;
-        double momentum;
+        DataType learning_rate;
+        DataType momentum;
         MATRIX grad_delta;
 
         SGD();
-        SGD(double lr=1e-3, double momen=0);
+        SGD(DataType lr=1e-3, DataType momen=0);
         MATRIX get_delta(MATRIX, MATRIX);
 };
 

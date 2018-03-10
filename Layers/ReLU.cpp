@@ -2,7 +2,6 @@
 #include"Optimizer.h"
 
 
-typedef double DataType;
 
 
 ReLU_Layer::ReLU_Layer()

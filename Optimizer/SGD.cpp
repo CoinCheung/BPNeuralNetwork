@@ -8,13 +8,11 @@ SGD::SGD()
 
 
 
-
-SGD::SGD(double lr, double momen)
+SGD::SGD(DataType lr, DataType momen)
 {
     learning_rate = lr;
     momentum = momen;
 }
-
 
 
 

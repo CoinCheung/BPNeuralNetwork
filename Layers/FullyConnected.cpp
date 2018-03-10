@@ -1,9 +1,9 @@
 #include"FullyConnected.h"
 #include"Optimizer.h"
 #include"numeric.h"
-#include<vector>
 #include<iostream>
 #include<cassert>
+#include<string>
 
 
 
@@ -15,32 +15,6 @@ FC_Layer::FC_Layer(int hnum, const char* init_mthd)
 
 
 
-FC_Layer& FC_Layer::operator=(FC_Layer& fl)
-{
-    hidden_num = fl.hidden_num;
-    init_method = fl.init_method;
-    weight = fl.weight;
-    bias = fl.bias;
-    gradW = fl.gradW;
-    gradb = fl.gradb;
-
-    return *this;
-}
-
-
-
-FC_Layer& FC_Layer::operator=(FC_Layer&& fl)
-{
-    hidden_num = fl.hidden_num;
-    init_method = fl.init_method;
-    weight = fl.weight;
-    bias = fl.bias;
-    gradW = fl.gradW;
-    gradb = fl.gradb;
-
-    return *this;
-}
-
 
 
 MATRIX FC_Layer::initialize(int N, int D, const char* init_mthd)
@@ -51,12 +25,12 @@ MATRIX FC_Layer::initialize(int N, int D, const char* init_mthd)
 
     if (init_mthd == "gaussian")
     {
-        double* pd;
+        DataType* pd;
         long size;
         pd = mat.data.get();
         size = mat.ele_num;
         for(long i{0}; i < size; i++)
-            pd[i] = gaussian_rand(0, 0.02);
+            pd[i] = static_cast<DataType>(gaussian_rand(0, 0.02));
     }
     else
     {

@@ -2,11 +2,8 @@
 #define _OPTIMIZER_H_
 
 
-#include"Matrix.hpp"
+#include"Matrix.h"
 #include<memory>
-
-
-typedef Matrix2<double> MATRIX;
 
 
 class Optimizer

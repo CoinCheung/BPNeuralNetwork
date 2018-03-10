@@ -1,5 +1,5 @@
-#ifndef _MATRIX_H_
-#define _MATRIX_H_
+#ifndef _MATRIX2_H_
+#define _MATRIX2_H_
 
 #include<iostream>
 #include<memory>
@@ -1080,10 +1080,8 @@ Matrix2<T> Matrix2<T>::dot(Matrix2 mr)
     Matrix2<T> mat = Matrix2<T>::zeros(N1,D2); 
     T* dm = mat.data.get();
 
-    // TODO: add boundary check here
     assert(D1==N2);
-    assert(data != nullptr);
-    assert(mr.data != nullptr);
+    assert((data != nullptr) && (mr.data != nullptr));
 
     long pos_mat{0};
     long pos1{0}, pos2{0};

@@ -1,14 +1,12 @@
 #ifndef _FULLYCONNECTED_H_
 #define _FULLYCONNECTED_H_
 
-#include"Matrix.hpp"
+#include<memory>
+#include"Matrix.h"
 #include"Layer.h"
 #include"Optimizer.h"
-#include<iostream>
 
 
-
-typedef Matrix2<double> MATRIX;
 
 
 class FC_Layer: public Layer
@@ -26,9 +24,6 @@ class FC_Layer: public Layer
 
         explicit FC_Layer(int hidden_num, const char* init_mthd);
 
-        FC_Layer& operator=(FC_Layer&);
-        FC_Layer& operator=(FC_Layer&&);
-
 
         MATRIX initialize(int N, int D, const char* init_mthd);
 
@@ -37,8 +32,9 @@ class FC_Layer: public Layer
         void update();
 
         ~FC_Layer(){}
-
 };
 
+
+typedef std::shared_ptr<FC_Layer> FULLY_CONNECTED;
 
 #endif

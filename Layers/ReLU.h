@@ -3,12 +3,10 @@
 
 
 #include<memory>
-#include"Matrix.hpp"
+#include"Matrix.h"
 #include"Layer.h"
+#include"Optimizer.h"
 
-
-typedef Matrix2<double> MATRIX;
-typedef std::shared_ptr<Optimizer> OPTIMIZER;
 
 
 class ReLU_Layer:public Layer
@@ -26,5 +24,6 @@ class ReLU_Layer:public Layer
 };
 
 
+typedef std::shared_ptr<ReLU_Layer> RELU;
 
 #endif
