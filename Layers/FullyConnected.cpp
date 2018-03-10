@@ -1,4 +1,5 @@
 #include"FullyConnected.h"
+#include"Optimizer.h"
 #include"numeric.h"
 #include<vector>
 #include<iostream>
@@ -6,7 +7,7 @@
 
 
 
-FC_Layer::FC_Layer(int hnum, const char* act_type, const char* init_mthd)
+FC_Layer::FC_Layer(int hnum, const char* init_mthd)
 {
     hidden_num = hnum;
     init_method = std::string(init_mthd);
@@ -55,8 +56,7 @@ MATRIX FC_Layer::initialize(int N, int D, const char* init_mthd)
         pd = mat.data.get();
         size = mat.ele_num;
         for(long i{0}; i < size; i++)
-            // pd[i] = gaussian_rand(0, 0.02);
-            pd[i] = i/10.0;
+            pd[i] = gaussian_rand(0, 0.02);
     }
     else
     {
@@ -65,34 +65,6 @@ MATRIX FC_Layer::initialize(int N, int D, const char* init_mthd)
     }
 
     return mat;
-}
-
-
-
-MATRIX FC_Layer::get_weight()
-{
-    return weight;
-}
-
-
-
-MATRIX FC_Layer::get_bias()
-{
-    return bias;
-}
-
-
-
-MATRIX FC_Layer::get_gradW()
-{
-    return gradW;
-}
-
-
-
-MATRIX FC_Layer::get_gradb()
-{
-    return gradb;
 }
 
 
@@ -114,13 +86,22 @@ MATRIX FC_Layer::forward(MATRIX input)
 
 
 
-MATRIX FC_Layer::backward(MATRIX grad_pre)
+MATRIX FC_Layer::backward(MATRIX grad_pre, OPTIMIZER optimizer)
 {
     MATRIX mat;
 
     gradW = in_mat.transpose().dot(grad_pre);
     gradb = MATRIX::ones(1, in_mat.N).dot(grad_pre);
     mat = grad_pre.dot(weight.transpose());
+
+    if (deltaW.data==nullptr)
+    {
+        deltaW = MATRIX::zeros_like(weight);
+        deltab = MATRIX::zeros_like(bias);
+    }
+
+    deltaW = optimizer->get_delta(gradW, deltaW);
+    deltab = optimizer->get_delta(gradb, deltab);
 
     return mat;
 }
@@ -129,7 +110,8 @@ MATRIX FC_Layer::backward(MATRIX grad_pre)
 
 void FC_Layer::update()
 {
-
+    weight = weight + deltaW;
+    bias = bias + deltab;
 }
 
 

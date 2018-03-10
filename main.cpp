@@ -1,6 +1,8 @@
 #include<Matrix.hpp>
 #include<numeric.h>
 #include"BP.h"
+#include"Optimizer.h"
+#include"SGD.h"
 #include<iostream>
 #include<string>
 #include<vector>
@@ -8,10 +10,8 @@
 
 
 
-
 void testMatrix();
 void testBP();
-
 
 
 
@@ -34,9 +34,9 @@ int main(void)
     cout << gaussian_rand() << endl;
     cout << log(exp(1)) << endl;
 
-    testMatrix();
+    // testMatrix();
 
-    // testBP();
+    testBP();
 
     return 0;
 
@@ -49,31 +49,20 @@ void testBP()
     using namespace std;
 
     vector<int> hidden_nums;
-
     hidden_nums.reserve(2);
     hidden_nums.push_back(4);
     hidden_nums.push_back(5);
+    hidden_nums.push_back(6);
 
-    BPnet net(hidden_nums, "relu", "gaussian");
+    SGD_OPT optimizer(new SGD(1e-3, 0.9));
+    BPnet net(hidden_nums, "gaussian", optimizer);
 
-    // MATRIX in(MATRIX::ones(3,3));
+
     MATRIX in = MATRIX::arange(12).reshape(4,3);
     MATRIX label = MATRIX::ones(1,4);
+
     net.train(in, label);
 
-    // auto fl = FullyConnected(new FC_Layer(10, "relu", "gaussian"));
-    // FC_Layer fl(10, "relu", "gaussian");
-    // cout << "hidden numbers: " << fl.get()->hidden_num << endl;
-    // cout << "init_method: " << fl.get()->init_method << endl;
-
-    // MATRIX scores = net.forward(in);
-    // scores.print();
-    // auto layers = net.layers;
-    // net.layers[0]->get_weight().print();
-
-
-    
-    // net.train();
 }
 
 
@@ -343,6 +332,15 @@ void testMatrix()
     MATRIX mm1 = MATRIX::arange(1,25).reshape(4,6);
     mm1.print();
     mm1.transpose().print();
+    mm1.transpose().max(0).print();
+
+    mm1 = MATRIX::arange(1,25).reshape(4,6);
+    ReLU_Layer relu;
+    (mm1-16.0).print();
+    relu.forward(mm1-16.0).print();
+    mm1.print();
+    relu.backward(mm1, SGD_OPT()).print();
+
 }
 
 

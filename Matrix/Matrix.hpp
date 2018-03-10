@@ -6,12 +6,6 @@
 #include<cassert>
 #include<cmath>
 
-// #include"proto.h"
-// #include"constructor.h"
-// #include"assign.h"
-// #include"operator.h"
-// #include"compute.h"
-
 
 
 
@@ -47,9 +41,12 @@ class Matrix2
         Matrix2 sum(int axis=0);
         Matrix2 mean();
 
+        Matrix2 max(int axis=0);
         Matrix2 argmax(int axis=0);
 
         static Matrix2 ones(int n, int d);
+        static Matrix2 ones_like(Matrix2);
+        static Matrix2 zeros_like(Matrix2);
         static Matrix2 zeros(int n, int d);
         static Matrix2 arange(int n);
         static Matrix2 arange(int a, int b);
@@ -846,6 +843,39 @@ Matrix2<T> Matrix2<T>::ones(int n, int d)
 }
 
 
+
+template<class T>
+Matrix2<T> Matrix2<T>::ones_like(Matrix2<T> in)
+{
+    Matrix2<T> mat(in.N, in.D);
+    long num{in.ele_num};
+    T* mp{mat.data.get()};
+
+    for(long i{0}; i<num; i++)
+        mp[i] = 1;
+
+    return mat;
+}
+
+
+
+
+template<class T>
+Matrix2<T> Matrix2<T>::zeros_like(Matrix2<T> in)
+{
+    Matrix2<T> mat(in.N, in.D);
+    long num{in.ele_num};
+    T* mp{mat.data.get()};
+
+    for(long i{0}; i<num; i++)
+        mp[i] = 0;
+
+    return mat;
+}
+
+
+
+
 template<class T>
 Matrix2<T> Matrix2<T>::zeros(int n, int d)
 {
@@ -1170,6 +1200,53 @@ Matrix2<T> Matrix2<T>::mean()
     for (long i{0}; i<ele_num; i++)
         mp[0] += p[i]; 
     mp[0] /= ele_num;
+
+    return mat;
+}
+
+
+
+
+template<class T>
+Matrix2<T> Matrix2<T>::max(int axis)
+{
+    Matrix2<T> mat;
+    T* p{data.get()};
+    T* mp{nullptr};
+    long pos;
+
+    if (axis == 0)
+    {
+        mat = Matrix2<T>(1, D);
+        mp = mat.data.get();
+        for (int i = 0; i < D; i++)
+        {
+            pos = i;
+            mp[i] = p[pos];
+            for (int j = 0; j < N-1; j++)
+            {
+                pos += D;
+                if (p[pos] > mp[i])
+                    mp[i] = p[pos];
+            }
+        }
+    }
+
+    else if (axis == 1)
+    {
+        mat = Matrix2<T>(N, 1);
+        mp = mat.data.get();
+        pos = 0;
+        for (int i = 0; i < N; i++)
+        {
+            mp[i] = p[pos++];
+            for (int j = 0; j < D-1; j++, pos++)
+            {
+                if (mp[i] < p[pos])
+                    mp[i] = p[pos];
+            }
+        }
+    }
 
     return mat;
 }

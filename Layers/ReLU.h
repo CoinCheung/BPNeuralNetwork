@@ -8,15 +8,18 @@
 
 
 typedef Matrix2<double> MATRIX;
+typedef std::shared_ptr<Optimizer> OPTIMIZER;
 
 
 class ReLU_Layer:public Layer
 {
     public:
+        MATRIX in_mat;
+
         ReLU_Layer();
 
         MATRIX forward(MATRIX);
-        MATRIX backward(MATRIX);
+        MATRIX backward(MATRIX, OPTIMIZER);
         void update();
 
         
