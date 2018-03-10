@@ -40,7 +40,7 @@ BPnet trainBP()
     hidden_nums.push_back(6);
 
     // optimizer
-    SGD_OPT optimizer(new SGD(1e-3, 0.9));
+    SGD_OPT optimizer{std::make_shared<SGD>(1e-3, 0.9)};
     BPnet net(hidden_nums, "gaussian", optimizer);
 
 

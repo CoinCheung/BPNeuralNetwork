@@ -1,6 +1,6 @@
 CPP = g++
 ROOT = $(shell pwd)
-CFLAGs = -c -std=c++11 -I./
+CFLAGs = -c -O2 -std=c++11 -I./
 LFLAGs = -lm -ltcmalloc
 
 

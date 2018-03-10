@@ -32,14 +32,14 @@ BPnet::BPnet(std::vector<int>& FC_nums, const char* i_mthd, OPTIMIZER opt)
     for(auto i{0}; i < layer_num-1; i++)
     {
         hidden_nums = FC_nums[i];
-        fc_layer.reset(new FC_Layer(hidden_nums, i_mthd));
+        fc_layer = std::make_shared<FC_Layer>(hidden_nums, i_mthd);
         layers.push_back(fc_layer);
 
-        relu_layer.reset(new ReLU_Layer);
+        relu_layer = std::make_shared<ReLU_Layer>();
         layers.push_back(relu_layer);
     }
     hidden_nums = FC_nums[layer_num-1];
-    layers.push_back(FULLY_CONNECTED(new FC_Layer(hidden_nums, i_mthd)));
+    layers.push_back(std::make_shared<FC_Layer>(hidden_nums, i_mthd));
 
     init_method = std::string(i_mthd);
 }
