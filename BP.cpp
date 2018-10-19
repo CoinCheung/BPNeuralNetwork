@@ -18,7 +18,6 @@ BPnet::BPnet()
 
 
 
-
 BPnet::BPnet(std::vector<int>& FC_nums, const char* i_mthd, OPTIMIZER opt)
 {
     optimizer = opt;

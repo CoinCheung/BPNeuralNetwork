@@ -8,8 +8,6 @@
 #include<vector>
 
 
-
-
 BPnet trainBP();
 void testBP(BPnet);
 
