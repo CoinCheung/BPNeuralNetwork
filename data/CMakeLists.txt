@@ -9,14 +9,10 @@ endif (CMAKE_COMPILER_IS_GNUCXX)
 
 link_directories(/opt/opencv/lib64)
 
-
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(OPENCV REQUIRED opencv4)
 
-# find_package(OpenCV REQUIRED)
-
-add_executable(main convert_cifar10.cpp)
-# target_link_libraries(main PRIVATE ${OpenCV_LIBS})
+add_executable(main convert_cifar10.cpp utils.cpp)
 target_link_libraries(main PRIVATE tcmalloc ${OPENCV_LIBRARIES})
 target_include_directories(main PRIVATE ${OPENCV_INCLUDE_DIRS})
 target_compile_options(main PRIVATE ${OPENCV_CFLAGS_OTHER})
