@@ -3,12 +3,15 @@ project(example)
 
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-    set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+    set (CMAKE_CXX_FLAGS "-Wall -std=c++11 ${CMAKE_CXX_FLAGS}")
     message ("CMAKE_CXX_FLAGS is: ${CMAKE_CXX_FLAGS}")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
+link_directories(/opt/opencv/lib64)
+
+
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(OPENCV REQUIRED opencv)
+pkg_check_modules(OPENCV REQUIRED opencv4)
 
 # find_package(OpenCV REQUIRED)
 

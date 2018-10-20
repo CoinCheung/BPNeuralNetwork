@@ -1,4 +1,4 @@
 *.[oa]
 /build/
 TODO
-/data/
+/data/cifar*

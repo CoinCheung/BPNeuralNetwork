@@ -18,3 +18,21 @@ One should note that only float are double are support as the neural network par
 
 * In order to change the hidden layer numbers and hidden layers sizes, one may open the file main.cpp and modify the first couple lines. These lines decide the structure of the network.
 
+
+### Prepare cifar-10 dataset 
+This program relies on opencv, to build opencv from source: 
+```
+    $ git clone https://github.com/opencv/opencv.git
+    $ cd opencv
+    $ mkdir -p build && cd build
+    $ cmake .. -CMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/opt/opencv
+    $ make -j8
+    $ sudo make install
+```
+Note that I build my opencv to ```/opt/opencv```. If your have your own opencv library, please modify associated items in ```CMakeLists.txt```.  
+
+Then we run the script to create the dataset:  
+```
+    $ cd BPNeuralNetwork
+    $ sh get_cifar10.sh
+```
