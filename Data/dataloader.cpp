@@ -9,9 +9,6 @@
 #include"Matrix.h"
 
 
-// TODO: matrx2.tile
-// matrx2.get_row(vector<int>)
-
 
 Dataloader::Dataloader() {
 
@@ -20,6 +17,10 @@ Dataloader::Dataloader() {
 
 Dataloader::Dataloader(std::string db_path) {
     fin.open(db_path, std::ios_base::in | std::ios_base::binary);
+    if (!fin.is_open()) { // TODO: use glog
+        std::cout << "File " << db_path << "open failed !!\n";
+        assert(false);
+    }
     fin.seekg(0, fin.end);
     len = fin.tellg() / (3073);
     curr = 0;
@@ -40,25 +41,26 @@ void Dataloader::shuffle() {
 }
 
 
-std::pair<MATRIX, std::vector<int>> Dataloader::get_one_batch(int batch_size) {
+std::pair<MATRIX, MATRIX> Dataloader::get_one_batch(int batch_size) {
     using namespace std;
 
     long offset; 
     vector<char> buf(3073);
     MATRIX mat(batch_size, 3072);
-    vector<int> label;
+    MATRIX label(batch_size, 1);
+    double *lb_ptr{label.data.get()};
 
     if (curr + batch_size > len) {
         shuffle();
         curr = 0;
     }
 
-    label.reserve(batch_size);
     for (int i{0}; i < batch_size; ++i) {
         offset = indices[curr++] * 3073;
         fin.seekg(offset);
         fin.read(&buf[0], 3073);
-        label.push_back(static_cast<int>(buf[0]));
+        // TODO: implement matrix [] operator
+        lb_ptr[i] = static_cast<double>(static_cast<unsigned char>(buf[0]));
 
         double *ptr = mat.get_row_ptr(i);
         for (int j{0}; j < 3072; ++j) {
@@ -79,7 +81,7 @@ void show_batch(MATRIX&);
 cv::Mat get_one_mat(MATRIX&, int);
 
 int main() {
-    Dataloader dl("../data/cifar_dbs/train.db");
+    Dataloader dl("../Data/cifar_dbs/train.db");
 
     auto batch = dl.get_one_batch(10);
     batch = dl.get_one_batch(64);

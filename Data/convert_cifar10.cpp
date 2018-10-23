@@ -25,10 +25,10 @@ int main() {
 void convert_cifar() {
     using namespace std;
 
-    string train_img_dir = "/home/coin/myprojects/BPNeuralNetwork/data/cifar_images/train/";
-    string test_img_dir = "/home/coin/myprojects/BPNeuralNetwork/data/cifar_images/test/";
-    string data_bins_dir = "/home/coin/myprojects/BPNeuralNetwork/data/cifar-10-batches-bin/";
-    string db_dir = "/home/coin/myprojects/BPNeuralNetwork/data/cifar_dbs/";
+    string train_img_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar_images/train/";
+    string test_img_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar_images/test/";
+    string data_bins_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar-10-batches-bin/";
+    string db_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar_dbs/";
     string img_dir;
     stringstream ss;
 

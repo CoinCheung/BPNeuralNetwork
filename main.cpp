@@ -1,13 +1,14 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<utility>
 
 #include<Matrix.h>
 #include<numeric.h>
 #include"BP.h"
 #include"Optimizer.h"
 #include"SGD.h"
-#include"data/dataloader.h"
+#include"Data/dataloader.h"
 
 
 BPnet trainBP();
@@ -34,7 +35,7 @@ BPnet trainBP()
 {
     // hidden layer structures, change network stuctures here
     std::vector<int> hidden_nums;
-    hidden_nums.reserve(2);
+    hidden_nums.reserve(3);
     hidden_nums.push_back(4);
     hidden_nums.push_back(5);
     hidden_nums.push_back(6);
@@ -43,21 +44,24 @@ BPnet trainBP()
     SGD_OPT optimizer{std::make_shared<SGD>(1e-3, 0.9)};
     BPnet net(hidden_nums, "gaussian", optimizer);
 
+    // dataloader
+    dl = Dataloader("./Data/cifar_dbs/train.db");
+
 
     // training 
+    int iter_num = 100;
+    int batch_size = 32;
     MATRIX batch;
     MATRIX label;
-    for (int i{0}; i < 10; i++)
+    for (int i{0}; i < iter_num; i++)
     {
-        // prepare training data
-        batch = MATRIX::arange(12).reshape(4,3);
-        label = 2.0*MATRIX::ones(1,4);
+        auto batch = dl.get_one_batch(batch_size);
+        auto img = batch.first;
+        auto label = batch.second;
 
         // one training iteration
-        net.train(batch, label);
+        net.train(img, label);
     }
-
-    std::vector<int>().swap(hidden_nums);
 
     return net;
 }

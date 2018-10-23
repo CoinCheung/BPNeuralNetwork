@@ -12,7 +12,7 @@ include_directories(
     )
 
 set(SRCS
-    data/dataloader.cpp
+    Data/dataloader.cpp
     )
 ### debug
 link_directories(/opt/opencv/lib64)

@@ -19,7 +19,7 @@ class Dataloader {
         Dataloader(std::string db_path);
         ~Dataloader();
         void shuffle();
-        std::pair<MATRIX, std::vector<int>> get_one_batch(int batch_size);
+        std::pair<MATRIX, MATRIX> get_one_batch(int batch_size);
 
 };
 
