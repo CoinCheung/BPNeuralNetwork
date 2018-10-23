@@ -9,8 +9,6 @@
 #include"utils.h"
 
 // TODO: use args to assign cifar bin directories
-// 1. clear() before seekg
-// istreambuf_iter<char>
 
 
 void convert_cifar();
@@ -86,7 +84,6 @@ void concat_file(FileIn& fin, FileOut& fout) {
     int len = fin.get_length();
     int buf_size{4096};
     std::vector<char> buf(buf_size);
-    // char buf[4096];
 
     fin.restart();
     while (fin.peek() != EOF) {

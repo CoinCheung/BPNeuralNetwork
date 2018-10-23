@@ -10,7 +10,7 @@
 
 
 
-//// member functions of FileIn class
+ /* member functions of FileIn class */
 FileIn::FileIn(std::string fpth) {
     set_file(fpth);
 }
@@ -71,18 +71,9 @@ std::pair<cv::Mat, int> FileIn::get_one_img() {
         fin.read(r, 1024);
         fin.read(g, 1024);
         fin.read(b, 1024);
-        channels.emplace_back(
-                    cv::Size(32, 32),
-                    CV_8UC1, 
-                    r);
-        channels.emplace_back(cv::Mat(
-                    cv::Size(32, 32),
-                    CV_8UC1, 
-                    g));
-        channels.emplace_back(cv::Mat(
-                    cv::Size(32, 32),
-                    CV_8UC1, 
-                    b));
+        channels.emplace_back(cv::Size(32, 32), CV_8UC1, r);
+        channels.emplace_back(cv::Size(32, 32), CV_8UC1, g);
+        channels.emplace_back(cv::Size(32, 32), CV_8UC1, b);
         cv::Mat img;
         cv::merge(channels, img);
         return std::make_pair(img, static_cast<int>(label));
@@ -112,7 +103,7 @@ void FileIn::read(std::vector<char>& buf, int size) {
 }
 
 
-//// member functions of FileOut class
+ /* member functions of FileOut class */
 FileOut::FileOut(std::string fpth) {
     set_file(fpth);
 }

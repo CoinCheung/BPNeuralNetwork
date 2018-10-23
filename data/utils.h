@@ -25,7 +25,6 @@ class FileIn {
         int tellg();
         void seekg(int pos);
         void read(std::vector<char>&, int size);
-        // void read(char *, int size);
 };
 
 
@@ -40,7 +39,6 @@ class FileOut {
 
         void set_file(std::string fpth);
         void write(std::vector<char>&, int size);
-        // void write(char *, int size);
 };
 
 #endif

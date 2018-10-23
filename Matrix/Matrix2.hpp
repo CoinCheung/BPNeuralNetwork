@@ -3,9 +3,9 @@
 
 #include<iostream>
 #include<memory>
+#include<vector>
 #include<cassert>
 #include<cmath>
-
 
 
 
@@ -22,7 +22,7 @@ class Matrix2
         // functions
         Matrix2();
         Matrix2(int n, int d);
-        Matrix2(Matrix2&);
+        Matrix2(const Matrix2&);
         Matrix2(Matrix2&&);
 
         Matrix2& operator=(Matrix2&);
@@ -52,6 +52,12 @@ class Matrix2
         static Matrix2 arange(int a, int b);
         
         void print();
+
+        // manuplate
+        T* get_row_ptr(int row_num);
+        Matrix2 get_row_mtx(int row);
+        Matrix2 get_row_mtx(std::vector<int>& rows);
+        static Matrix2 tile(std::vector<Matrix2>& mtxs);
 
         // computation
         Matrix2 operator+(Matrix2);
@@ -124,7 +130,7 @@ Matrix2<T>::Matrix2(Matrix2<T>&& m)
 
 
 template<class T>
-Matrix2<T>::Matrix2(Matrix2<T>& m)
+Matrix2<T>::Matrix2(const Matrix2<T>& m)
 {
     N = m.N;
     D = m.D;
@@ -933,6 +939,91 @@ Matrix2<T> Matrix2<T>::arange(int a, int b)
 }
 
 
+template<class T>
+T* Matrix2<T>::get_row_ptr(int row_num) {
+    return data.get() + row_num * D;
+}
+
+
+template<class T>
+Matrix2<T> Matrix2<T>::get_row_mtx(int row) {
+    if (row < 0 || row >= N) {
+        std::cout << "matrix row index " << row << " out of range !!" << std::endl;
+        assert(false);
+    }
+
+    Matrix2<T> mat(1, D);
+    T *ptr_src, *ptr_dst;
+
+    ptr_src = data.get() + (D * row); 
+    ptr_dst = mat.data.get(); 
+
+    for (int i{0}; i < D; ++i) {
+        ptr_dst[i] = ptr_src[i];
+    }
+
+    return mat;
+}
+
+
+template<class T>
+Matrix2<T> Matrix2<T>::get_row_mtx(std::vector<int>& rows) {
+    int row_num{static_cast<int>(rows.size())};
+    Matrix2<T> mat(row_num, D);
+    T *ptr_src, *ptr_dst;
+
+    int ind{0};
+    ptr_dst = mat.data.get();
+    for (int i{0}; i < row_num; ++i) {
+        int row = rows[i];
+        if (row < 0 || row >= N) {
+            std::cout << "matrix row index " << row << " out of range !!\n";
+            assert(false);
+        }
+        ptr_src = data.get() + (D * row);
+        for (int j{0}; j < D; ++j) {
+            ptr_dst[ind] = ptr_src[j];
+            ++ind;
+        }
+    }
+
+    return mat;
+}
+
+
+template<class T>
+Matrix2<T> Matrix2<T>::tile(std::vector<Matrix2<T>>& mtxs) {
+    int mtx_num{static_cast<int>(mtxs.size())};
+    int row_num, col_num;
+    T *ptr_src, *ptr_dst;
+
+    if (mtx_num == 0) return Matrix2<T>();
+
+    // infer shape and check
+    row_num = 0;
+    col_num = mtxs[0].D;
+    for (auto &el : mtxs) {
+        row_num += el.N;
+        if (el.D != col_num) {
+            std::cout << "Matrix tile should have exactly same coloums\n";
+            assert(false);
+        }
+    }
+
+    // copy number
+    Matrix2<T> mat(row_num, col_num);
+    ptr_dst = mat.data.get();
+    long ind{0};
+    for (auto &el : mtxs) {
+        ptr_src = el.data.get();
+        for (long i{0}; i < el.ele_num; ++i) {
+            ptr_dst[ind] = ptr_src[i];
+            ++ind;
+        }
+    }
+    
+    return mat;
+}
 
 
 template<class T>
