@@ -33,6 +33,9 @@ foreach(f ${SRCS})
     message(${f})
 endforeach(f)
 
+## add external libs
+add_subdirectory(./glog)
+
 
 ## compile executable
 add_executable(main ${SRCS})

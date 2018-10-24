@@ -9,6 +9,7 @@
 #include"Optimizer.h"
 #include"SGD.h"
 #include"dataloader.h"
+#include<glog/logging.h>
 
 
 BPnet trainBP();
@@ -23,6 +24,7 @@ int main(void) {
     net = trainBP();
 
     std::cout << "training done !\n";
+    CHECK(false) << "error !\n";
 
     // test
     testBP(net);
@@ -62,6 +64,8 @@ BPnet trainBP() {
         // one training iteration
         net.train(img, label);
     }
+
+
 
     return net;
 }
