@@ -23,7 +23,8 @@ MATRIX FC_Layer::initialize(int N, int D, const char* init_mthd)
 
     MATRIX mat(N, D);
 
-    if (init_mthd == "gaussian")
+    string init_method(init_mthd);
+    if (init_method == "gaussian")
     {
         DataType* pd;
         long size;

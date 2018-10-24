@@ -10,12 +10,15 @@
 
 class Dataloader {
     public:
+        std::string fpth;
         std::ifstream fin;
         long len;
         long curr;
         std::vector<int> indices;
 
         Dataloader();
+        Dataloader(const Dataloader&);
+        Dataloader(Dataloader&&);
         Dataloader(std::string db_path);
         ~Dataloader();
         void shuffle();

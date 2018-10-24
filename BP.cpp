@@ -10,7 +10,6 @@
 
 
 
-
 BPnet::BPnet()
 {
 
@@ -96,8 +95,8 @@ MATRIX BPnet::backward(MATRIX grad_pre, OPTIMIZER optimizer)
 {
     MATRIX grad{grad_pre};
 
-    auto len = layers.size();
-    for(auto i{0}; i<len; i++)
+    int len = static_cast<int>(layers.size());
+    for (int i{0}; i < len; ++i)
     {
         grad = layers[len-i-1]->backward(grad, optimizer);
     }
@@ -107,18 +106,14 @@ MATRIX BPnet::backward(MATRIX grad_pre, OPTIMIZER optimizer)
 
 
 
-void BPnet::update()
-{
-    int layer_num = layers.size();
-
-    for(auto el:layers)
-    {
+void BPnet::update() {
+    for(auto el : layers) {
         el->update();
     }
 }
 
 
-void BPnet::train(MATRIX in_mat, MATRIX label)
+void BPnet::train(MATRIX& in_mat, MATRIX& label)
 {
     MATRIX Loss;
     MATRIX scores;

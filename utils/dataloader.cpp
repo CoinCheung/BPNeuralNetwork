@@ -15,10 +15,33 @@ Dataloader::Dataloader() {
 }
 
 
-Dataloader::Dataloader(std::string db_path) {
-    fin.open(db_path, std::ios_base::in | std::ios_base::binary);
+Dataloader::Dataloader(const Dataloader& dl) {
+    fpth = dl.fpth;
+    len = dl.len;
+    curr = dl.curr;
+    indices = dl.indices;
+    fin.open(fpth, std::ios_base::in | std::ios_base::binary);
     if (!fin.is_open()) { // TODO: use glog
-        std::cout << "File " << db_path << "open failed !!\n";
+        std::cout << "File " << fpth << "open failed !!\n";
+        assert(false);
+    }
+}
+
+
+Dataloader::Dataloader(Dataloader&& dl) {
+    fin.swap(dl.fin);
+    len = dl.len;
+    curr = dl.curr;
+    std::swap(indices, dl.indices);
+    std::swap(dl.fin, fin);
+}
+
+
+Dataloader::Dataloader(std::string db_path) {
+    fpth = db_path;
+    fin.open(fpth, std::ios_base::in | std::ios_base::binary);
+    if (!fin.is_open()) { // TODO: use glog
+        std::cout << "File " << fpth << "open failed !!\n";
         assert(false);
     }
     fin.seekg(0, fin.end);
@@ -72,8 +95,10 @@ std::pair<MATRIX, MATRIX> Dataloader::get_one_batch(int batch_size) {
 }
 
 
+// uncomment the following line to add the debug code
+// #define DATALOADER_DEBUG
+#ifdef DATALOADER_DEBUG
 
-// TODO: remove this main
 #include<opencv2/opencv.hpp>
 #include<cmath>
 
@@ -89,31 +114,6 @@ int main() {
     auto lb = batch.second;
 
     show_batch(img);
-
-    // MATRIX mat(4,5);
-    // auto p = mat.data.get();
-    // for (int i{0}; i < 20; ++i) p[i] = i;
-    // mat.print();
-    // std::vector<int> ind{2,0,1,1,3};
-    // auto m1 = mat.get_row_mtx(ind);
-    // m1.print();
-    // auto m2 = mat.get_row_mtx(0);
-    // m2.print();
-    //
-    // std::vector<MATRIX> vm;
-    // vm.push_back(m1);
-    // vm.push_back(m2);
-    // vm.push_back(m1);
-    // vm.push_back(m2);
-    //
-    // MATRIX::tile(vm).print();
-
-    double pix[16];
-    for (int i{0}; i < 16; ++i) pix[i] = i;
-    cv::Mat a(4,4,CV_64FC1,pix);
-    std::cout << a << std::endl;
-    pix[0] = 10000;
-    std::cout << a << std::endl;
 
     return 0;
 }
@@ -132,7 +132,6 @@ void show_batch(MATRIX& img) {
     }
 
     Mat convas(row << 5, row << 5, CV_64FC3);
-
     int ind = 0;
     for (int i{0}; i < row; ++i) {
         for (int j{0}; j < row; ++j) {
@@ -143,7 +142,6 @@ void show_batch(MATRIX& img) {
     }
     imshow("iii2", convas);
     waitKey(0);
-
 }
 
 
@@ -173,3 +171,5 @@ cv::Mat get_one_mat(MATRIX& m, int row) {
 
     return im;
 }
+
+#endif
