@@ -9,7 +9,7 @@ tar -zxvf cifar-10-binary.tar.gz
 mkdir -p cifar_images/train/ cifar_images/test/ cifar_dbs/ build/
 cd build
 cmake .. && make
-./main
+./main ..
 cd ..
 rm -rf build
 

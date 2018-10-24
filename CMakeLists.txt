@@ -9,11 +9,21 @@ endif (CMAKE_COMPILER_IS_GNUCXX)
 
 include_directories(
     Matrix
+    Layers
+    Optimizer
+    Math
+    Data
     )
 
-set(SRCS
-    Data/dataloader.cpp
-    )
+## source files
+file(GLOB SRC_LAYERS "Layers/*.cpp")
+file(GLOB SRC_OPTIMIZER "Optimizer/*.cpp")
+file(GLOB SRC_MATRIX "Matrix/*.cpp")
+file(GLOB SRC_MATH "Math/*.cpp")
+
+set(SRCS ${SRC_LAYERS} ${SRC_OPTIMIZER} ${SRC_MATRIX} ${SRC_MATH})
+message("glob results: ")
+
 ### debug
 link_directories(/opt/opencv/lib64)
 

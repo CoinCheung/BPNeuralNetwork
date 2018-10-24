@@ -1,5 +1,5 @@
 *.[oa]
 /build/
 TODO
-/Data/cifar*
-/Data/build/
+/data/cifar*
+/data/build/

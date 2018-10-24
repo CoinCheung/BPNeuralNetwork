@@ -11,32 +11,34 @@
 // TODO: use args to assign cifar bin directories
 
 
-void convert_cifar();
+void convert_cifar(std::string&);
 void concat_file(FileIn&, FileOut&);
 
 
 
-int main() {
-    convert_cifar();
+int main(int count, char* argv[]) {
+    using namespace std;
+    string data_pth(argv[1]);
+    convert_cifar(data_pth);
     return 0;
 }
 
 
-void convert_cifar() {
+void convert_cifar(std::string& data_pth) {
     using namespace std;
 
-    string train_img_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar_images/train/";
-    string test_img_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar_images/test/";
-    string data_bins_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar-10-batches-bin/";
-    string db_dir = "/home/coin/myprojects/BPNeuralNetwork/Data/cifar_dbs/";
+    string train_img_dir(data_pth + "/cifar_images/train/");
+    string test_img_dir(data_pth + "/cifar_images/test/");
+    string data_bins_dir(data_pth + "/cifar-10-batches-bin/");
+    string db_dir(data_pth + "/cifar_dbs/");
     string img_dir;
-    stringstream ss;
 
     FileIn fin;
     FileOut fout;
     vector<int> lb_nums(10, 0);
     
     // prepare for fout
+    stringstream ss;
     ss.str("");
     ss.clear();
     ss << db_dir << "/train.db";
