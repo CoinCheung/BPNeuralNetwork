@@ -5,10 +5,9 @@
 #include<opencv2/opencv.hpp>
 #include<utility>
 #include<iostream>
+#include<glog/logging.h>
 
 #include"utils.h"
-
-// TODO: use args to assign cifar bin directories
 
 
 void convert_cifar(std::string&);
@@ -18,6 +17,10 @@ void concat_file(FileIn&, FileOut&);
 
 int main(int count, char* argv[]) {
     using namespace std;
+
+    google::InitGoogleLogging("cifar_creator");
+    google::SetStderrLogging(google::INFO);
+
     string data_pth(argv[1]);
     convert_cifar(data_pth);
     return 0;
@@ -62,7 +65,7 @@ void convert_cifar(std::string& data_pth) {
         }
 
         // decompress each images
-        cout << "Processing: " << fin.fn << endl;
+        LOG(INFO) << "Processing: " << fin.fn << endl;
         while (fin.peek() != EOF) {
             auto one_pair = fin.get_one_img();
             auto img = one_pair.first;
@@ -77,7 +80,7 @@ void convert_cifar(std::string& data_pth) {
         // concat each bin to a whole one
         concat_file(fin, fout);
     }
-    cout << "finished" << endl;
+    LOG(INFO) << "finished" << endl;
 }
 
 

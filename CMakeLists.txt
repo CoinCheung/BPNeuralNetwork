@@ -33,12 +33,9 @@ foreach(f ${SRCS})
     message(${f})
 endforeach(f)
 
-## add external libs
-add_subdirectory(./glog)
-
 
 ## compile executable
 add_executable(main ${SRCS})
-target_link_libraries(main PRIVATE tcmalloc ${OPENCV_LIBRARIES})
+target_link_libraries(main PRIVATE tcmalloc glog ${OPENCV_LIBRARIES})
 target_include_directories(main PRIVATE ${OPENCV_INCLUDE_DIRS})
 target_compile_options(main PRIVATE ${OPENCV_CFLAGS_OTHER})

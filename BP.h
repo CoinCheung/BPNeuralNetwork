@@ -32,7 +32,7 @@ class BPnet
         MATRIX forward(MATRIX);
         MATRIX backward(MATRIX, OPTIMIZER);
         void update();
-        void train(MATRIX&, MATRIX&);
+        double train(MATRIX&, MATRIX&);
 };
 
 

@@ -4,6 +4,7 @@
 #include<fstream>
 #include<algorithm>
 #include<utility>
+#include<glog/logging.h>
 
 #include"dataloader.h"
 #include"Matrix.h"
@@ -21,10 +22,7 @@ Dataloader::Dataloader(const Dataloader& dl) {
     curr = dl.curr;
     indices = dl.indices;
     fin.open(fpth, std::ios_base::in | std::ios_base::binary);
-    if (!fin.is_open()) { // TODO: use glog
-        std::cout << "File " << fpth << "open failed !!\n";
-        assert(false);
-    }
+    CHECK(fin.is_open()) << "File " << fpth << "open failed !!\n";
 }
 
 
@@ -40,14 +38,12 @@ Dataloader::Dataloader(Dataloader&& dl) {
 Dataloader::Dataloader(std::string db_path) {
     fpth = db_path;
     fin.open(fpth, std::ios_base::in | std::ios_base::binary);
-    if (!fin.is_open()) { // TODO: use glog
-        std::cout << "File " << fpth << "open failed !!\n";
-        assert(false);
-    }
+    CHECK(fin.is_open()) << "File " << fpth << "open failed !!\n";
+
     fin.seekg(0, fin.end);
     len = fin.tellg() / (3073);
     curr = 0;
-    std::cout << "length of dataset is: " << len << std::endl;
+    LOG(INFO) << "length of dataset is: " << len << std::endl;
     indices.reserve(len);
     for (long i{0}; i < len ; ++i) indices.push_back(i);
     shuffle();
@@ -82,10 +78,9 @@ std::pair<MATRIX, MATRIX> Dataloader::get_one_batch(int batch_size) {
         offset = indices[curr++] * 3073;
         fin.seekg(offset);
         fin.read(&buf[0], 3073);
-        // TODO: implement matrix [] operator
         lb_ptr[i] = static_cast<double>(static_cast<unsigned char>(buf[0]));
 
-        double *ptr = mat.get_row_ptr(i);
+        double *ptr = mat[i];
         for (int j{0}; j < 3072; ++j) {
             ptr[j] = static_cast<double>(static_cast<unsigned char>(buf[j + 1]));
         }

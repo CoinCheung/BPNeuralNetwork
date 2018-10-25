@@ -16,14 +16,17 @@ BPnet trainBP();
 void testBP(BPnet);
 
 
-
 int main(void) {
+    // set up logger
+    google::InitGoogleLogging("BP_Logger");
+    google::SetStderrLogging(google::INFO);
+
     BPnet net;
 
     // training
     net = trainBP();
 
-    std::cout << "training done !\n";
+    LOG(INFO) << "training done !\n";
     CHECK(false) << "error !\n";
 
     // test
@@ -54,6 +57,7 @@ BPnet trainBP() {
     // training 
     int iter_num = 10;
     int batch_size = 32;
+    double loss(0);
     MATRIX batch;
     MATRIX label;
     for (int i{0}; i < iter_num; i++) {
@@ -62,10 +66,10 @@ BPnet trainBP() {
         auto label = batch.second;
 
         // one training iteration
-        net.train(img, label);
+        loss = net.train(img, label);
+        LOG(INFO) << "iteration: " << iter_num 
+            << ", loss: " << loss << std::endl;
     }
-
-
 
     return net;
 }
@@ -81,7 +85,7 @@ void testBP(BPnet net) {
     scores = net.forward(batch);
     pred = scores.argmax(1).flatten();
 
-    std::cout << "predicted labels: " << std::endl;
+    LOG(INFO) << "predicted labels ... \n";
     pred.print();
 }
 

@@ -4,7 +4,7 @@
 #include<iostream>
 #include<memory>
 #include<vector>
-#include<cassert>
+#include<glog/logging.h>
 #include<cmath>
 
 
@@ -33,6 +33,7 @@ class Matrix2
         Matrix2 copy();
         Matrix2 one_hot(int axis, int range);
         Matrix2 transpose();
+        T ToScalar();
 
         Matrix2 dot(Matrix2);
 
@@ -60,6 +61,7 @@ class Matrix2
         static Matrix2 tile(std::vector<Matrix2>& mtxs);
 
         // computation
+        T* operator[](int row);
         Matrix2 operator+(Matrix2);
         Matrix2 operator-(Matrix2);
         Matrix2 operator*(Matrix2);
@@ -170,6 +172,11 @@ Matrix2<T>& Matrix2<T>::operator=(Matrix2&& m)
 }
 
 
+template<class T>
+T* Matrix2<T>::operator[](int row) {
+    CHECK(row >= 0 && row < N) << "row number out of range !!\n";
+    return data.get() + row * D;
+}
 
 
 template<class T>
@@ -180,22 +187,17 @@ Matrix2<T> Matrix2<T>::operator+(Matrix2 other)
     T *p{data.get()};
     T *dp{other.data.get()};
 
-    assert((dN*dD*N*D) != 0);
+    CHECK_NE(dN*dD*N*D, 0) << "Matrix shape should not be 0 for this operation\n";
 
-    // scenario where two matrices have same shape
-    if(N == dN && D == dD) 
-    {
+    if(N == dN && D == dD) { // scenario where two matrices have same shape
         Matrix2<T> mat(N,D);
         T* mp{mat.data.get()};
 
-        for(long i{0}; i < ele_num; i++)
+        for(long i{0}; i < ele_num; i++) {
             mp[i] = p[i] + dp[i];
+        }
         return mat;
-    }
-
-    // scenario where divident is a one-element matrix
-    else if(N == 1 && D == 1)
-    {
+    } else if(N == 1 && D == 1) { // scenario where divident is a one-element matrix
         Matrix2<T> mat(dN, dD);
         T* mp{mat.data.get()};
         T temp{data.get()[0]};
@@ -204,96 +206,72 @@ Matrix2<T> Matrix2<T>::operator+(Matrix2 other)
         for(long i{0}; i < num; i++)
             mp[i] = temp + dp[i];
         return mat;
-    }
-
-    // scenario where other is a one-element matrix
-    else if(dN == 1 && dD == 1)
-    {
+    } else if(dN == 1 && dD == 1) { // scenario where other is a one-element matrix
         Matrix2<T> mat(N, D);
         T* mp{mat.data.get()};
         T temp{dp[0]};
 
-        for(long i{0}; i < ele_num; i++)
+        for(long i{0}; i < ele_num; i++) {
             mp[i] = p[i] + temp;
+        }
         return mat;
-    }
-
-    // scenario where a is a matrix and b is a horizontal vector
-    else if(dN == 1 && D == dD)
-    {
+    } else if(dN == 1 && D == dD) { // scenario where a is a matrix and b is a horizontal vector
         Matrix2<T> mat(N, D);
         T* mp{mat.data.get()};
         T temp;
         long pos;
 
-        for(int i{0}; i < dD; i++)
-        {
+        for(int i{0}; i < dD; i++) {
             temp = dp[i];
             pos = i;
-            for(int j{0}; j < N; j++, pos+=D)
+            for(int j{0}; j < N; j++, pos+=D) {
                 mp[pos] = p[pos] + temp;
+            }
         }
         return mat;
-    }
-
-    // scenario where a is a matrix and b is a vertical vector
-    else if(N == dN && dD == 1) 
-    {
+    } else if(N == dN && dD == 1) { // scenario where a is a matrix and b is a vertical vector
         Matrix2<T> mat(N, D);
         T* mp{mat.data.get()};
         long pos{0};
         T temp;
 
-        for(int i{0}; i < N; i++)
-        {
+        for(int i{0}; i < N; i++) {
             temp = dp[i];
-            for(int j{0}; j < D; j++, pos++)
+            for(int j{0}; j < D; j++, pos++) {
                 mp[pos] = p[pos] + temp;
+            }
         }
         return mat;
-    }
-
-    // scenario where a is a horizontal vector and b is a Matrix
-    else if(N == 1 && D == dD)
-    {
+    } else if(N == 1 && D == dD) { // scenario where a is a horizontal vector and b is a Matrix
         Matrix2<T> mat(dN, dD);
         T* mp{mat.data.get()};
         long pos;
         T temp;
 
-        for(int i{0}; i < dD; i++)
-        {
+        for(int i{0}; i < dD; i++) {
             pos = i;
             temp = p[i];
-            for(int j{0}; j < dN; j++, pos+=D)
+            for(int j{0}; j < dN; j++, pos+=D) {
                 mp[pos] = temp + dp[pos]; 
+            }
         }
         return mat;
-    }
-
-    // scenario where a is a vertical vector and b is a Matrix
-    else if(D == 1 && N == dN)
-    {
+    } else if(D == 1 && N == dN) { // scenario where a is a vertical vector and b is a Matrix
         Matrix2<T> mat(dN, dD);
         T* mp{mat.data.get()};
         long pos = 0;
         T temp;
 
-        for(int i{0}; i < dN; i++)
-        {
+        for(int i{0}; i < dN; i++) {
             temp = p[i];
-            for(int j{0}; j < dD; j++, pos++)
+            for(int j{0}; j < dD; j++, pos++) {
                 mp[pos] = temp + dp[pos]; 
+            }
         }
         return mat;
+    } else {
+        CHECK(false) << "Two matrices do not match in shape\n";
     }
-
-    else
-    {
-        std::cout << "Two matrices do not match in shape" << std::endl;
-        assert(false);
-    }
-
 }
 
 
@@ -308,7 +286,7 @@ Matrix2<T> Matrix2<T>::operator-(Matrix2 other)
     T *p{data.get()};
     T *dp{other.data.get()};
 
-    assert((dN*dD*N*D) != 0);
+    CHECK_NE((dN*dD*N*D), 0) << "dimension should not be zero!\n";
 
     // scenario where two matrices have same shape
     if(N == dN && D == dD) 
@@ -414,16 +392,11 @@ Matrix2<T> Matrix2<T>::operator-(Matrix2 other)
                 mp[pos] = temp - dp[pos]; 
         }
         return mat;
-    }
-
-    else
-    {
-        std::cout << "Two matrices do not match in shape" << std::endl;
-        assert(false);
+    } else {
+        CHECK(false) << "Two matrices do not match in shape !\n";
     }
 
 }
-
 
 
 
@@ -435,7 +408,7 @@ Matrix2<T> Matrix2<T>::operator*(Matrix2 other)
     T *p{data.get()};
     T *dp{other.data.get()};
 
-    assert((dN*dD*N*D) != 0);
+    CHECK_NE((dN*dD*N*D), 0) << "dimension should not be zero!\n";
 
     // scenario where two matrices have same shape
     if(N == dN && D == dD) 
@@ -541,12 +514,8 @@ Matrix2<T> Matrix2<T>::operator*(Matrix2 other)
                 mp[pos] = temp * dp[pos]; 
         }
         return mat;
-    }
-
-    else
-    {
-        std::cout << "Two matrices do not match in shape" << std::endl;
-        assert(false);
+    } else {
+        CHECK(false) << "Two matrices do not match in shape !! \n";
     }
 
 }
@@ -561,7 +530,7 @@ Matrix2<T> Matrix2<T>::operator/(Matrix2 other)
     T *p{data.get()};
     T *dp{other.data.get()};
 
-    assert((dN*dD*N*D) != 0);
+    CHECK_NE((dN*dD*N*D), 0) << "dimension should not be zero!\n";
 
     // scenario where two matrices have same shape
     if(N == dN && D == dD) 
@@ -667,14 +636,9 @@ Matrix2<T> Matrix2<T>::operator/(Matrix2 other)
                 mp[pos] = temp / dp[pos]; 
         }
         return mat;
+    } else {
+        CHECK(false) << "Two matrices do not match in shape\n";
     }
-
-    else
-    {
-        std::cout << "Two matrices do not match in shape" << std::endl;
-        assert(false);
-    }
-
 }
 
 
@@ -941,16 +905,15 @@ Matrix2<T> Matrix2<T>::arange(int a, int b)
 
 template<class T>
 T* Matrix2<T>::get_row_ptr(int row_num) {
+    CHECK(row_num >= 0 && row_num < N) << "row number out of range !!\n";
     return data.get() + row_num * D;
 }
 
 
 template<class T>
 Matrix2<T> Matrix2<T>::get_row_mtx(int row) {
-    if (row < 0 || row >= N) {
-        std::cout << "matrix row index " << row << " out of range !!" << std::endl;
-        assert(false);
-    }
+    CHECK(row >= 0 && row < N) << "matrix row index " << row 
+        << " out of range !!\n";
 
     Matrix2<T> mat(1, D);
     T *ptr_src, *ptr_dst;
@@ -976,10 +939,8 @@ Matrix2<T> Matrix2<T>::get_row_mtx(std::vector<int>& rows) {
     ptr_dst = mat.data.get();
     for (int i{0}; i < row_num; ++i) {
         int row = rows[i];
-        if (row < 0 || row >= N) {
-            std::cout << "matrix row index " << row << " out of range !!\n";
-            assert(false);
-        }
+        CHECK(row >= 0 && row < N) << "matrix row index " 
+            << row << " out of range !!\n";
         ptr_src = data.get() + (D * row);
         for (int j{0}; j < D; ++j) {
             ptr_dst[ind] = ptr_src[j];
@@ -1004,10 +965,7 @@ Matrix2<T> Matrix2<T>::tile(std::vector<Matrix2<T>>& mtxs) {
     col_num = mtxs[0].D;
     for (auto &el : mtxs) {
         row_num += el.N;
-        if (el.D != col_num) {
-            std::cout << "Matrix tile should have exactly same coloums\n";
-            assert(false);
-        }
+        CHECK_EQ(el.D, col_num) << "Matrix tile should have exactly same coloums\n";
     }
 
     // copy number
@@ -1029,7 +987,7 @@ Matrix2<T> Matrix2<T>::tile(std::vector<Matrix2<T>>& mtxs) {
 template<class T>
 Matrix2<T> Matrix2<T>::reshape(int n, int d)
 {
-    assert(n*d == N*D);
+    CHECK_EQ(n*d, N*D) << "shape cannot be infered !\n";
 
     Matrix2<T> mat(n,d);
     T* dp1{data.get()};
@@ -1078,58 +1036,52 @@ Matrix2<T> Matrix2<T>::copy()
 
 
 template<class T>
-Matrix2<T> Matrix2<T>::one_hot(int axis, int range)
-{
+Matrix2<T> Matrix2<T>::one_hot(int axis, int range) {
     Matrix2<T> mat;
 
-    if (N == 1 || D == 1)
-    {
-        if (axis == 0)
-        {
+    if (N == 1 || D == 1) {
+        if (axis == 0) {
             mat = Matrix2<T>::zeros(range, ele_num);
             T* p{data.get()};
             T* mp{mat.data.get()};
             int ind;
 
-            for (int i{0}; i<ele_num; i++)
-            {
-                assert(p[i]<range);
+            for (int i{0}; i<ele_num; i++) {
+                CHECK_LT(p[i], range) << "one hot number out of range: "
+                    << p[i] << std::endl;
                 ind = static_cast<int>(p[i]*ele_num+i);
                 mp[ind] = 1;
             }
-        }
-
-        else if (axis == 1)
-        {
+        } else if (axis == 1) {
             mat = Matrix2<T>::zeros(ele_num, range);
             T* p{data.get()};
             T* mp{mat.data.get()};
             int ind;
 
-            for (int i{0}; i<ele_num; i++)
-            {
-                assert(p[i]<range);
+            for (int i{0}; i<ele_num; i++) {
+                CHECK_LT(p[i], range) << "one hot number out of range: "
+                    << p[i] << std::endl;
                 ind = static_cast<int>(p[i]+i*range);
                 mp[ind] = 1;
             }
+        } else {
+            CHECK(false)
+                << "one hot does not support axis larger than 1\n";
         }
-
-        else
-        {
-            std::cout << "one hot does not support axis larger than 1" << std::endl;
-            assert(false);
-        }
-    }
-
-    else
-    {
-        std::cout << "one hot input matrix must be a 1-D array" << std::endl;
-        assert(false);
+    } else {
+        CHECK(false) << "one hot input matrix must be a 1-D array\n";
     }
 
     return mat;
 }
 
+
+template<class T>
+T Matrix2<T>::ToScalar() {
+    CHECK(N == 1 && D == 1) 
+        << "ToScalar() requires matrix to have shape (1, 1) !! \n";
+    return *data.get();
+}
 
 
 template<class T>
@@ -1171,8 +1123,9 @@ Matrix2<T> Matrix2<T>::dot(Matrix2 mr)
     Matrix2<T> mat = Matrix2<T>::zeros(N1,D2); 
     T* dm = mat.data.get();
 
-    assert(D1==N2);
-    assert((data != nullptr) && (mr.data != nullptr));
+    CHECK_EQ(D1, N2) << "cannot infer shape from two matrices \n";
+    CHECK(data) << "Matrix is empty \n";
+    CHECK(mr.data) << "Matrix is empty \n";
 
     long pos_mat{0};
     long pos1{0}, pos2{0};
@@ -1266,10 +1219,8 @@ Matrix2<T> Matrix2<T>::sum(int axis)
         }
     }
 
-    else
-    {
-        std::cout << "does not support dimensions over 3" << std::endl;
-        assert(false);
+    else {
+        CHECK(false) << "does not support dimensions over 3\n";
     }
 
     return mat;
@@ -1344,62 +1295,46 @@ Matrix2<T> Matrix2<T>::max(int axis)
 
 
 template<class T>
-Matrix2<T> Matrix2<T>::argmax(int axis)
-{
+Matrix2<T> Matrix2<T>::argmax(int axis) {
     Matrix2<T> mat;
 
-    if (axis == 0)
-    {
+    if (axis == 0) {
         mat = Matrix2<T>(1,D);
         long pos{0};
         T temp;
         T* mp{mat.data.get()};
         T* p{data.get()};
 
-        for(int i = 0; i < D; i++)
-        {
+        for(int i = 0; i < D; i++) {
             pos = i;
             temp = p[pos];
-            for(int j = 1; j < N; j++)
-            {
+            for(int j = 1; j < N; j++) {
                 pos += D;
-                if(p[pos] > temp)
-                {
+                if(p[pos] > temp) {
                     temp = p[pos];
                     mp[i] = j;
                 }
             }
         }
-    }
-
-    else if (axis == 1)
-    {
+    } else if (axis == 1) {
         mat = Matrix2<T>(N,1);
         long pos{0};
         T temp;
         T* mp{mat.data.get()};
         T* p{data.get()};
 
-        for(int i = 0; i < N; i++)
-        {
+        for(int i = 0; i < N; i++) {
             temp = p[pos++];
-            for(int j = 1; j < D; j++, pos++)
-            {
-                if(temp < p[pos])
-                {
+            for(int j = 1; j < D; j++, pos++) {
+                if(temp < p[pos]) {
                     mp[i] = j;
                     temp = p[pos];
                 }
             }
         }
+    } else {
+        CHECK(false) << "does not support axis other than 0 and 1\n";
     }
-
-    else
-    {
-        std::cout << "does not support axis other than 0 and 1" << std::endl;
-        assert(false);
-    }
-
 
     return mat;
 }

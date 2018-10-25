@@ -34,7 +34,8 @@ MATRIX ReLU_Layer::forward(MATRIX input)
 
 MATRIX ReLU_Layer::backward(MATRIX grad_prev, OPTIMIZER optimizer)
 {
-    assert((grad_prev.N==in_mat.N) && (grad_prev.D==in_mat.D));
+    CHECK((grad_prev.N==in_mat.N) && (grad_prev.D==in_mat.D)) << "matrix shape"
+        "should be same\n";
 
     MATRIX mat(grad_prev.N, grad_prev.D);
     DataType* ip{in_mat.data.get()};
@@ -42,11 +43,13 @@ MATRIX ReLU_Layer::backward(MATRIX grad_prev, OPTIMIZER optimizer)
     DataType* mp{mat.data.get()};
     long num{grad_prev.ele_num};
 
-    for (long i{0}; i<num; i++)
-        if (ip[i] > 0)
+    for (long i{0}; i<num; i++) {
+        if (ip[i] > 0) {
             mp[i] = gp[i];
-        else
+        } else {
             mp[i] = 0;
+        }
+    }
 
     return mat;
 }

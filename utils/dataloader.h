@@ -1,5 +1,6 @@
 #ifndef _DATALOADER_H_
 #define _DATALOADER_H_
+
 #include<string>
 #include<vector>
 #include<fstream>

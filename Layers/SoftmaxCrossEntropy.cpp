@@ -1,3 +1,5 @@
+#include<glog/logging.h>
+#include"Matrix.h"
 #include"SoftmaxCrossEntropy.h"
 
 
@@ -29,11 +31,7 @@ MATRIX SoftmaxCrossEntropy::forward(MATRIX scores, MATRIX _label)
 
 MATRIX SoftmaxCrossEntropy::backward()
 {
-    if (softmax.data.get()==nullptr)
-    {
-        std::cout << "must compute forward path first" << std::endl;
-        assert(false);
-    }
+    CHECK(softmax.data) << "must compute forward path first\n";
 
     MATRIX mat{softmax};
     DataType* mp{mat.data.get()};
@@ -58,7 +56,8 @@ MATRIX SoftmaxCrossEntropy::backward()
 MATRIX CrossEntropyFunc(MATRIX softmax_scores, MATRIX label)
 {
     label = label.flatten();
-    assert(softmax_scores.N==label.ele_num);
+    CHECK_EQ(softmax_scores.N, label.ele_num)
+        << "sample number should be consist with label number\n";
 
     DataType eps{static_cast<DataType>(1e-12)};
     MATRIX label_one_hot{label.one_hot(1, softmax_scores.D)};

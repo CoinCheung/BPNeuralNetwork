@@ -7,6 +7,7 @@
 #include<vector>
 #include<iostream>
 #include<string>
+#include<glog/logging.h>
 
 
 
@@ -113,18 +114,15 @@ void BPnet::update() {
 }
 
 
-void BPnet::train(MATRIX& in_mat, MATRIX& label)
+double BPnet::train(MATRIX& in_mat, MATRIX& label)
 {
     MATRIX Loss;
     MATRIX scores;
     MATRIX grad;
-    static long iter_num = 0;
 
     // forward
     scores = forward(in_mat);
     Loss = LossFunc.forward(scores, label);
-    std::cout << "iteration: " << iter_num << ",   loss:" << std::endl;
-    Loss.print();
 
     // backward
     grad = LossFunc.backward();
@@ -132,9 +130,8 @@ void BPnet::train(MATRIX& in_mat, MATRIX& label)
 
     // update network
     update();
-
-    iter_num++;
-
+    
+    return Loss.ToScalar();
 }
 
 

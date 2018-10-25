@@ -5,6 +5,7 @@
 #include<opencv2/opencv.hpp>
 #include<utility>
 #include<iostream>
+#include<glog/logging.h>
 
 #include"utils.h"
 
@@ -30,11 +31,7 @@ void FileIn::set_file(std::string fpth) {
 
     fin.open(fpth, std::ios_base::in | std::ios_base::binary);
     fn.assign(fpth);
-    // TODO: use glog to check this
-    if (!fin.is_open()) {
-        std::cout << "file: \"" << fn << "\" open failed !!\n";
-        return;
-    }
+    CHECK(fin.is_open()) << "file: \"" << fn << "\" open failed !!\n";
 }
 
 
@@ -64,21 +61,18 @@ std::pair<cv::Mat, int> FileIn::get_one_img() {
     std::vector<cv::Mat> channels;
 
     if (fin.peek() == EOF) {
-        // TODO: check here with glog
-        std::cout << "file comes to end, read filed !!\n";
-    } else {
-        fin.read(&label, 1);
-        fin.read(r, 1024);
-        fin.read(g, 1024);
-        fin.read(b, 1024);
-        channels.emplace_back(cv::Size(32, 32), CV_8UC1, r);
-        channels.emplace_back(cv::Size(32, 32), CV_8UC1, g);
-        channels.emplace_back(cv::Size(32, 32), CV_8UC1, b);
-        cv::Mat img;
-        cv::merge(channels, img);
-        return std::make_pair(img, static_cast<int>(label));
-    }
-
+        LOG(INFO) << "file comes to end, read filed !!\n";
+    } 
+    fin.read(&label, 1);
+    fin.read(r, 1024);
+    fin.read(g, 1024);
+    fin.read(b, 1024);
+    channels.emplace_back(cv::Size(32, 32), CV_8UC1, r);
+    channels.emplace_back(cv::Size(32, 32), CV_8UC1, g);
+    channels.emplace_back(cv::Size(32, 32), CV_8UC1, b);
+    cv::Mat img;
+    cv::merge(channels, img);
+    return std::make_pair(img, static_cast<int>(label));
 }
 
 
@@ -117,18 +111,11 @@ FileOut::~FileOut() {
 
 
 void FileOut::set_file(std::string fpth) {
-    if (fout.is_open()) {
-        fout.close();
-    }
+    if (fout.is_open()) fout.close();
 
-    fout.open(fpth, std::ios_base::out | std::ios_base::binary);
     fn.assign(fpth);
-
-    // TODO: use glog to check this
-    if (!fout.is_open()) {
-        std::cout << "file: \"" << fn << "\" open failed !!\n";
-        return;
-    }
+    fout.open(fpth, std::ios_base::out | std::ios_base::binary);
+    CHECK(fout.is_open()) << "file: \"" << fn << "\" open failed !!\n";
 }
 
 
