@@ -57,5 +57,6 @@ Compile and run like this:
     $ mkdir -p build
     $ cd build
     $ cmake ..
+    $ make -j4
     $ ./main
 ```
