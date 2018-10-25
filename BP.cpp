@@ -7,15 +7,13 @@
 #include<vector>
 #include<iostream>
 #include<string>
-
+#include<glog/logging.h>
 
 
 
 BPnet::BPnet()
 {
-
 }
-
 
 
 
@@ -97,8 +95,8 @@ MATRIX BPnet::backward(MATRIX grad_pre, OPTIMIZER optimizer)
 {
     MATRIX grad{grad_pre};
 
-    auto len = layers.size();
-    for(auto i{0}; i<len; i++)
+    int len = static_cast<int>(layers.size());
+    for (int i{0}; i < len; ++i)
     {
         grad = layers[len-i-1]->backward(grad, optimizer);
     }
@@ -108,29 +106,22 @@ MATRIX BPnet::backward(MATRIX grad_pre, OPTIMIZER optimizer)
 
 
 
-void BPnet::update()
-{
-    int layer_num = layers.size();
-
-    for(auto el:layers)
-    {
+void BPnet::update() {
+    for(auto el : layers) {
         el->update();
     }
 }
 
 
-void BPnet::train(MATRIX in_mat, MATRIX label)
+double BPnet::train(MATRIX& in_mat, MATRIX& label)
 {
     MATRIX Loss;
     MATRIX scores;
     MATRIX grad;
-    static long iter_num = 0;
 
     // forward
     scores = forward(in_mat);
     Loss = LossFunc.forward(scores, label);
-    std::cout << "iteration: " << iter_num << ",   loss:" << std::endl;
-    Loss.print();
 
     // backward
     grad = LossFunc.backward();
@@ -138,9 +129,8 @@ void BPnet::train(MATRIX in_mat, MATRIX label)
 
     // update network
     update();
-
-    iter_num++;
-
+    
+    return Loss.ToScalar();
 }
 
 

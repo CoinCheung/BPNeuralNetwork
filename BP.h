@@ -6,11 +6,10 @@
 #include"SoftmaxCrossEntropy.h"
 #include"Optimizer.h"
 #include<vector>
+#include<string>
 
 
 
-
-// class of BPnet
 class BPnet
 {
     public:
@@ -33,7 +32,7 @@ class BPnet
         MATRIX forward(MATRIX);
         MATRIX backward(MATRIX, OPTIMIZER);
         void update();
-        void train(MATRIX, MATRIX);
+        double train(MATRIX&, MATRIX&);
 };
 
 
