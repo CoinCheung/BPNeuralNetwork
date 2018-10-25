@@ -13,7 +13,6 @@
 
 BPnet::BPnet()
 {
-
 }
 
 

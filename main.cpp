@@ -13,7 +13,7 @@
 
 
 BPnet trainBP();
-void testBP(BPnet);
+void testBP(BPnet&);
 
 
 int main(void) {
@@ -26,8 +26,7 @@ int main(void) {
     // training
     net = trainBP();
 
-    LOG(INFO) << "training done !\n";
-    CHECK(false) << "error !\n";
+    LOG(INFO) << "training done !\n\n\n";
 
     // test
     testBP(net);
@@ -51,19 +50,18 @@ BPnet trainBP() {
     BPnet net(hidden_nums, "gaussian", optimizer);
 
     // dataloader
+    int batch_size = 32;
     Dataloader dl("../data/cifar_dbs/train.db");
-
 
     // training 
     int iter_num = 10;
-    int batch_size = 32;
     double loss(0);
-    MATRIX batch;
+    MATRIX img;
     MATRIX label;
     for (int i{0}; i < iter_num; i++) {
         auto batch = dl.get_one_batch(batch_size);
-        auto img = batch.first;
-        auto label = batch.second;
+        img = batch.first;
+        label = batch.second;
 
         // one training iteration
         loss = net.train(img, label);
@@ -76,16 +74,35 @@ BPnet trainBP() {
 
 
 
-void testBP(BPnet net) {
+void testBP(BPnet& net) {
+    using namespace std;
+
     // test data
-    MATRIX batch{MATRIX::arange(3,15).reshape(4,3)};
+    int batch_size = 32;
+    Dataloader dl("../data/cifar_dbs/test.db");
+    dl.set_batch_size(32);
+    LOG(INFO) << "dataloader initialized \n";
+
+    MATRIX img;
     MATRIX scores;
     MATRIX pred;
+    vector<MATRIX> vsc;
+    int iter_num = dl.get_iter_num(batch_size);
+    LOG(INFO) << "iter number by batch size " << batch_size 
+        << ": " << iter_num << std::endl;
 
-    scores = net.forward(batch);
-    pred = scores.argmax(1).flatten();
+    vsc.reserve(iter_num);
+    for (int i{0}; i < iter_num; ++i) {
+        auto batch = dl.get_one_batch();
+        img = batch.first;
+        vsc.push_back(net.forward(img));
+    }
 
-    LOG(INFO) << "predicted labels ... \n";
-    pred.print();
+    scores = MATRIX::tile(vsc);
+    pred = scores.argmax(1);
+    scores.shape().print();
+    pred.shape().print();
+
+
 }
 

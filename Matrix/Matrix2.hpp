@@ -34,6 +34,7 @@ class Matrix2
         Matrix2 one_hot(int axis, int range);
         Matrix2 transpose();
         T ToScalar();
+        Matrix2 shape();
 
         Matrix2 dot(Matrix2);
 
@@ -1077,14 +1078,6 @@ Matrix2<T> Matrix2<T>::one_hot(int axis, int range) {
 
 
 template<class T>
-T Matrix2<T>::ToScalar() {
-    CHECK(N == 1 && D == 1) 
-        << "ToScalar() requires matrix to have shape (1, 1) !! \n";
-    return *data.get();
-}
-
-
-template<class T>
 Matrix2<T> Matrix2<T>::transpose()
 {
     Matrix2<T> mat(D, N);
@@ -1108,6 +1101,21 @@ Matrix2<T> Matrix2<T>::transpose()
 }
 
 
+template<class T>
+T Matrix2<T>::ToScalar() {
+    CHECK(N == 1 && D == 1) 
+        << "ToScalar() requires matrix to have shape (1, 1) !! \n";
+    return *data.get();
+}
+
+
+template<class T>
+Matrix2<T> Matrix2<T>::shape() {
+    Matrix2<T> mat(1, 2);
+    mat.data.get()[0] = N;
+    mat.data.get()[1] = D;
+    return mat;
+}
 
 
 template<class T>
@@ -1349,14 +1357,22 @@ void Matrix2<T>::print()
 
     T *pd{data.get()};
 
-    cout << "[ " << endl;;
-    for(int i{0}; i < N; i++)
-    {
-        for(int j{0}; j < D; j++)
-            cout << pd[i*D+j] << ", ";
-        cout << endl;
+    if (N == 1) {
+        cout << "[";
+        for(int j{0}; j < D; ++j) {
+            cout << pd[j] << ", ";
+        }
+        cout << "]\n";
+    } else {
+        cout << "[ \n";
+        for(int i{0}; i < N; i++) {
+            for(int j{0}; j < D; j++) {
+                cout << pd[i*D+j] << ", ";
+            }
+            cout << endl;
+        }
+        cout << "] \n";
     }
-    cout << "] " << endl;
 }
 
 

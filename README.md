@@ -47,3 +47,15 @@ Run the script to create the dataset:
     $ cd BPNeuralNetwork
     $ sh get_cifar10.sh
 ```
+
+
+### Compile the program and run (train and test)
+
+Compile and run like this:  
+```
+    $ cd BPNeuralNetwork
+    $ mkdir -p build
+    $ cd build
+    $ cmake ..
+    $ ./main
+```

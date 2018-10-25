@@ -20,6 +20,7 @@ Dataloader::Dataloader(const Dataloader& dl) {
     fpth = dl.fpth;
     len = dl.len;
     curr = dl.curr;
+    batch_size = dl.batch_size;
     indices = dl.indices;
     fin.open(fpth, std::ios_base::in | std::ios_base::binary);
     CHECK(fin.is_open()) << "File " << fpth << "open failed !!\n";
@@ -30,6 +31,7 @@ Dataloader::Dataloader(Dataloader&& dl) {
     fin.swap(dl.fin);
     len = dl.len;
     curr = dl.curr;
+    batch_size = dl.batch_size;
     std::swap(indices, dl.indices);
     std::swap(dl.fin, fin);
 }
@@ -43,6 +45,7 @@ Dataloader::Dataloader(std::string db_path) {
     fin.seekg(0, fin.end);
     len = fin.tellg() / (3073);
     curr = 0;
+    batch_size = 0;
     LOG(INFO) << "length of dataset is: " << len << std::endl;
     indices.reserve(len);
     for (long i{0}; i < len ; ++i) indices.push_back(i);
@@ -55,26 +58,43 @@ Dataloader::~Dataloader() {
 }
 
 
-void Dataloader::shuffle() {
+Dataloader Dataloader::shuffle() {
     std::random_shuffle(indices.begin(), indices.end());
+    return *this;
 }
 
 
-std::pair<MATRIX, MATRIX> Dataloader::get_one_batch(int batch_size) {
+Dataloader Dataloader::set_batch_size(int bs) {
+    batch_size = bs;
+    return *this;
+}
+
+
+Dataloader Dataloader::reset() {
+    CHECK(fin.is_open()) << "File " << fpth << "is not opened !!\n";
+    fin.seekg(0, fin.end);
+    curr = 0;
+    return *this;
+}
+
+
+// infinite iterator
+std::pair<MATRIX, MATRIX> Dataloader::get_one_batch(int batchsize) {
     using namespace std;
 
     long offset; 
     vector<char> buf(3073);
-    MATRIX mat(batch_size, 3072);
-    MATRIX label(batch_size, 1);
+    MATRIX mat(batchsize, 3072);
+    MATRIX label(batchsize, 1);
     double *lb_ptr{label.data.get()};
 
-    if (curr + batch_size > len) {
+    if (curr + batchsize > len) {
+        LOG(WARNING) << "One pass data iteration finished, restart dataloader !\n";
         shuffle();
         curr = 0;
     }
 
-    for (int i{0}; i < batch_size; ++i) {
+    for (int i{0}; i < batchsize; ++i) {
         offset = indices[curr++] * 3073;
         fin.seekg(offset);
         fin.read(&buf[0], 3073);
@@ -88,6 +108,52 @@ std::pair<MATRIX, MATRIX> Dataloader::get_one_batch(int batch_size) {
 
     return make_pair(mat, label);
 }
+
+
+// one pass iterator
+std::pair<MATRIX, MATRIX> Dataloader::get_one_batch() {
+    using namespace std;
+
+    CHECK_GT(batch_size, 0) << "batch size should not be set <= 0\n";
+    CHECK_LT(curr, len) << "data iterations ended but continue works: \n"
+        "curr: " << curr << " , len: " << len << endl;
+
+    int batchsize = batch_size;
+    if (curr + batchsize > len) {
+        batchsize = len - curr;
+    }
+
+    long offset; 
+    vector<char> buf(3073);
+    MATRIX mat(batchsize, 3072);
+    MATRIX label(batchsize, 1);
+    double *lb_ptr{label.data.get()};
+
+    for (int i{0}; i < batchsize; ++i) {
+        offset = indices[curr++] * 3073;
+        fin.seekg(offset);
+        fin.read(&buf[0], 3073);
+        lb_ptr[i] = static_cast<double>(static_cast<unsigned char>(buf[0]));
+
+        double *ptr = mat[i];
+        for (int j{0}; j < 3072; ++j) {
+            ptr[j] = static_cast<double>(static_cast<unsigned char>(buf[j + 1]));
+        }
+    }
+
+    return make_pair(mat, label);
+}
+
+
+int Dataloader::get_iter_num(int batchsize) {
+    int iter_num;
+
+    iter_num = len / batchsize;
+    if (len % batchsize != 0) ++iter_num;
+
+    return iter_num;
+}
+
 
 
 // uncomment the following line to add the debug code
